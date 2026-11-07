@@ -1,4 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { contactEmail, contactHref, contactMotif } from '../data/contact';
+const motif = contactMotif(Astro.url.searchParams.get('motif') || undefined);
 ---
-<BaseLayout title="Contact"><section class="page form-wrap"><p class="eyebrow">L’atelier vous répond</p><h1>Contact</h1><p>Pour une commande, une œuvre, un atelier ou une séance.</p><form method="post" action="mailto:"><label for="name">Votre nom</label><input id="name" name="name" required /><label for="message">Votre message</label><textarea id="message" name="message" rows="6" required></textarea><button type="submit">Envoyer</button></form><p class="notice">L’adresse de réception doit être confirmée avant mise en ligne.</p></section></BaseLayout>
+<BaseLayout title="Contact"><section class="page contact-page"><p class="eyebrow">L’atelier vous répond</p><h1>Contact</h1><p>Pour une commande, une œuvre, un atelier ou une séance.</p><div class="contact-panel"><p class="eyebrow">Votre demande</p><h2>{motif.label}</h2><p>Préparez votre message : l’objet et le début du texte sont déjà renseignés.</p><a class="contact-email" href={contactHref(Astro.url.searchParams.get('motif') || undefined)}>{contactEmail}</a><a class="text-link" href={contactHref(Astro.url.searchParams.get('motif') || undefined)}>Ouvrir votre messagerie →</a></div><p class="notice">L’adresse e-mail est confirmée dans les documents fournis. L’envoi depuis le site n’est pas configuré, aucun message de test n’a donc été envoyé.</p></section></BaseLayout>
