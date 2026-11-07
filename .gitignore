@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+source-originals/
+src/assets/originals/oeuf.png
+src/assets/originals/crabe.png
+src/assets/originals/ceramique.png
+src/assets/originals/illustration.jpg
+.DS_Store
+*.zip
+*.pages

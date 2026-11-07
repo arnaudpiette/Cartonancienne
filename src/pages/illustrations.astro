@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArtworkGallery from '../components/ArtworkGallery.astro';
+import { pendingIllustrations } from '../data/artworks';
+import { artworks } from '../data/artworks';
+---
+<BaseLayout title="Illustrations"><section class="page gallery-page"><p class="eyebrow">Portfolio</p><h1>Illustrations</h1><p>Des images au trait, à la lisière des signes et des histoires.</p><p class="notice">{pendingIllustrations[0]}. Aucune fiche n’est publiée sans son visuel et ses informations vérifiées.</p></section><ArtworkGallery artworks={artworks.filter((artwork) => artwork.category === 'illustration')} title="Les illustrations" /></BaseLayout>

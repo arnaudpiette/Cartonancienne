@@ -1,0 +1,6 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArtworkGallery from '../components/ArtworkGallery.astro';
+import { artworks } from '../data/artworks';
+---
+<BaseLayout title="Céramiques"><section class="page gallery-page"><p class="eyebrow">Collection</p><h1>Terre &amp; Mer.es</h1><p>Objets singuliers, céramiques peintes et matières marines façonnés à l’atelier.</p></section><ArtworkGallery artworks={artworks} title="La collection" /></BaseLayout>

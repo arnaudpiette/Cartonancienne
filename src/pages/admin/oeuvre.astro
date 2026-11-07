@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'; import { isAdmin } from '../../lib/supabase';
+if (!await isAdmin(Astro.cookies, Astro.request)) return Astro.redirect('/login');
+---
+<BaseLayout title="Éditer une œuvre"><section class="page form-wrap"><p class="eyebrow">Fiche œuvre</p><h1>Créer / modifier</h1><form method="post" action="/api/artworks" enctype="multipart/form-data"><label for="title">Titre</label><input id="title" name="title" required /><label for="category">Catégorie</label><select id="category" name="category"><option value="illustration">Illustration</option><option value="ceramique">Céramique</option></select><label for="description">Description</label><textarea id="description" name="description" rows="5"></textarea><label for="status">Statut</label><select id="status" name="status"><option value="draft">Brouillon</option><option value="published">Publier</option></select><label for="photos">Photos (JPEG, PNG ou WebP, 10 Mo max chacune)</label><input id="photos" name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple /><div id="media-fields"></div><button type="submit">Enregistrer la fiche</button></form></section></BaseLayout>
+<script>
+ const photos = document.querySelector<HTMLInputElement>('#photos'); const fields = document.querySelector('#media-fields');
+ photos?.addEventListener('change', () => { if (!fields) return; fields.innerHTML = Array.from(photos.files || []).map((file, i) => `<fieldset><legend>${file.name}</legend><label>Texte alternatif<input name="alt-${i}" required></label><label>Crédit<input name="credit-${i}"></label><label>Ordre<input name="position-${i}" type="number" value="${i}" min="0"></label><label>Couverture<input type="radio" name="cover" value="${i}" ${i === 0 ? 'checked' : ''}></label></fieldset>`).join(''); });
+</script>

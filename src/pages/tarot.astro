@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'; import ArtworkImage from '../components/ArtworkImage.astro'; import tarot from '../assets/originals/tarot.jpg';
+---
+<BaseLayout title="Tarot"><section class="page"><p class="eyebrow">À la carte</p><h1>Le Bon Tarot</h1><div class="page-grid"><ArtworkImage src={tarot} alt="Le Bon Tarot de Séverine Piette" /><div><p>Une séance pour regarder une question autrement, par les images, les symboles et ce qui cherche à se dire.</p><p class="notice">Les formats de séance, tarifs, créneaux et lien de réservation restent à confirmer.</p><a class="text-link" href="/contact">Prendre contact →</a></div></div></section></BaseLayout>

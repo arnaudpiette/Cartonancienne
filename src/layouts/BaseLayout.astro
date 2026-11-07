@@ -1,0 +1,24 @@
+---
+import '../styles/global.scss';
+const { title = 'La Cartonancienne', description = 'Les signes, les histoires et les objets de Séverine Piette.' } = Astro.props;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} — La Cartonancienne</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="La Cartonancienne, accueil">La Carton<span>ancienne</span></a>
+      <nav aria-label="Navigation principale">
+        <a href="/illustrations">Illustrations</a><a href="/ceramiques">Céramiques</a><a href="/tarot">Tarot</a><a href="/ateliers">Ateliers</a><a href="/bonjour">À propos</a><a href="/contact">Contact</a>
+      </nav>
+      <a class="login" href="/login">Login</a>
+    </header>
+    <main><slot /></main>
+    <footer><a href="/">La Cartonancienne</a><span>© Séverine Piette</span><a href="/contact">Écrire à l’atelier</a></footer>
+  </body>
+</html>

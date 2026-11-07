@@ -1,0 +1,11 @@
+---
+import ArtworkImage from './ArtworkImage.astro';
+import type { Artwork } from '../data/artworks';
+const { artwork } = Astro.props as { artwork: Artwork };
+---
+<a class="work-card" data-kind={artwork.category} href={`/oeuvres/${artwork.slug}`}>
+  <ArtworkImage src={artwork.image} alt={artwork.alt} />
+  <span>{artwork.categoryLabel}</span>
+  <h3>{artwork.title}</h3>
+  <span class="work-link">Voir la fiche →</span>
+</a>

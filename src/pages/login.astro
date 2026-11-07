@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { supabaseServer } from '../lib/supabase';
+let error = '';
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData(); const username = String(form.get('username') || ''); const password = String(form.get('password') || '');
+  const client = supabaseServer(Astro.cookies, Astro.request); const email = import.meta.env.PRIVATE_ADMIN_EMAIL;
+  if (!client || !email) error = 'La connexion administrateur n’est pas encore configurée.';
+  else if (username !== 'C@rtosev') error = 'Identifiant ou mot de passe incorrect.';
+  else { const { error: authError } = await client.auth.signInWithPassword({ email, password }); if (authError) error = 'Identifiant ou mot de passe incorrect.'; else return Astro.redirect('/admin'); }
+}
+---
+<BaseLayout title="Login"><section class="page form-wrap"><p class="eyebrow">Espace atelier</p><h1>Login</h1>{error && <p class="notice" role="alert">{error}</p>}<form method="post"><label for="username">Nom d’utilisateur</label><input id="username" name="username" autocomplete="username" required /><label for="password">Mot de passe</label><input id="password" name="password" type="password" autocomplete="current-password" required /><button type="submit">Se connecter</button></form></section></BaseLayout>
