@@ -1,6 +1,7 @@
 import { bookingServices, type BookingServiceSlug } from '../data/booking';
 
-type BookingMail = { bookingId: string; service: BookingServiceSlug; startAt: string; customerName: string; customerEmail: string; kind: 'confirmed' | 'changed' | 'cancelled' };
+export type BookingMail = { bookingId: string; service: BookingServiceSlug; startAt: string; customerName: string; customerEmail: string; kind: 'confirmed' | 'changed' | 'cancelled' };
+export type BookingRecipient = 'customer' | 'admin';
 
 export function bookingIcs(mail: BookingMail) {
   const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -10,16 +11,21 @@ export function bookingIcs(mail: BookingMail) {
 }
 
 /** Delivery is opt-in: tests stay simulated unless PRIVATE_BOOKING_MAIL_MODE is exactly "live". */
-export async function notifyBooking(mail: BookingMail) {
+export async function notifyBookingRecipient(mail: BookingMail, recipient: BookingRecipient) {
   const apiKey = import.meta.env.PRIVATE_RESEND_API_KEY;
   const admin = import.meta.env.PRIVATE_ADMIN_EMAIL;
   const subject = `${mail.kind === 'cancelled' ? 'Annulation' : 'Réservation'} — ${bookingServices[mail.service].title}`;
-  const recipients = [mail.customerEmail, admin].filter(Boolean);
-  if (import.meta.env.PRIVATE_BOOKING_MAIL_MODE !== 'live' || !apiKey || !admin) {
-    console.info('[booking notification simulated]', { bookingId: mail.bookingId, recipients, subject });
-    return { delivered: false, simulated: true };
+  const to = recipient === 'customer' ? mail.customerEmail : admin;
+  if (!to) throw new Error(`Destinataire ${recipient} non configuré`);
+  if (import.meta.env.PRIVATE_BOOKING_MAIL_MODE !== 'live') {
+    const simulatedFailures = String(import.meta.env.PRIVATE_BOOKING_MAIL_SIMULATE_FAILURES || '').split(',').map((value) => value.trim());
+    if (simulatedFailures.includes(recipient)) throw new Error(`Échec simulé pour ${recipient}`);
+    console.info('[booking notification simulated]', { bookingId: mail.bookingId, recipient, to, subject });
+    return { delivered: true, simulated: true };
   }
-  const response = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ from: import.meta.env.PRIVATE_MAIL_FROM || 'La Cartonancienne <agenda@lacartonancienne.fr>', to: recipients, subject, text: `Bonjour ${mail.customerName},\n\nVotre rendez-vous est ${mail.kind === 'cancelled' ? 'annulé' : 'enregistré'}.`, attachments: [{ filename: 'rendez-vous.ics', content: Buffer.from(bookingIcs(mail)).toString('base64') }] }) });
+  if (!apiKey) throw new Error('PRIVATE_RESEND_API_KEY manquante');
+  const text = recipient === 'customer' ? `Bonjour ${mail.customerName},\n\nVotre rendez-vous est ${mail.kind === 'cancelled' ? 'annulé' : 'enregistré'}.` : `Notification interne : ${mail.customerName} (${mail.customerEmail}) — ${mail.kind}.`;
+  const response = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ from: import.meta.env.PRIVATE_MAIL_FROM || 'La Cartonancienne <agenda@lacartonancienne.fr>', to: [to], subject, text, attachments: [{ filename: 'rendez-vous.ics', content: Buffer.from(bookingIcs(mail)).toString('base64') }] }) });
   if (!response.ok) throw new Error(`Transactional mail failed (${response.status})`);
   return { delivered: true, simulated: false };
 }

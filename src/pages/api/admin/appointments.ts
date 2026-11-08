@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { isBookingService } from '../../../data/booking';
-import { notifyBooking } from '../../../lib/notifications';
+import { deliverBookingNotification } from '../../../lib/booking-delivery';
 import { isAdmin, supabaseServer } from '../../../lib/supabase';
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
@@ -13,7 +13,8 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const { data: appointment } = await client.from('appointments').select('service_slug,customer_name,customer_email,start_at').eq('id', id).single();
   if (appointment && isBookingService(appointment.service_slug)) {
     const event = action === 'cancel' ? 'cancelled' : 'changed';
-    try { const result = await notifyBooking({ bookingId: id, service: appointment.service_slug, startAt: appointment.start_at, customerName: appointment.customer_name, customerEmail: appointment.customer_email, kind: event }); await client.from('booking_notifications').update({ status: result.delivered ? 'sent' : 'pending', attempts: 1, last_error: result.simulated ? 'Transport local simulé : aucun e-mail envoyé.' : null, sent_at: result.delivered ? new Date().toISOString() : null }).eq('appointment_id', id).eq('event', event); } catch (sendError) { await client.from('booking_notifications').update({ status: 'failed', attempts: 1, last_error: sendError instanceof Error ? sendError.message : 'Erreur d’envoi' }).eq('appointment_id', id).eq('event', event); }
+    const { data: notification } = await client.from('booking_notifications').select('id').eq('appointment_id', id).eq('event', event).order('created_at', { ascending: false }).limit(1).single();
+    if (notification) await deliverBookingNotification(client, notification.id, { bookingId: id, service: appointment.service_slug, startAt: appointment.start_at, customerName: appointment.customer_name, customerEmail: appointment.customer_email, kind: event });
   }
   return redirect(`/admin/agenda?message=${encodeURIComponent(action === 'cancel' ? 'Rendez-vous annulé.' : 'Rendez-vous déplacé.')}`);
 };

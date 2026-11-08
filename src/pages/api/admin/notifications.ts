@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { isBookingService } from '../../../data/booking';
-import { notifyBooking } from '../../../lib/notifications';
+import { deliverBookingNotification } from '../../../lib/booking-delivery';
 import { isAdmin, supabaseServer } from '../../../lib/supabase';
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
@@ -11,5 +11,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const appointment: any = data?.appointments;
   const event = data?.event;
   if (!appointment || !isBookingService(appointment.service_slug) || !['confirmed', 'changed', 'cancelled'].includes(event || '')) return redirect('/admin/agenda?message=Notification%20introuvable');
-  try { const result = await notifyBooking({ bookingId: appointment.id, service: appointment.service_slug, startAt: appointment.start_at, customerName: appointment.customer_name, customerEmail: appointment.customer_email, kind: event as 'confirmed' | 'changed' | 'cancelled' }); await client.from('booking_notifications').update({ status: result.delivered ? 'sent' : 'pending', attempts: 1, last_error: result.simulated ? 'Transport local simulé : aucun e-mail envoyé.' : null, sent_at: result.delivered ? new Date().toISOString() : null }).eq('id', id); return redirect(`/admin/agenda?message=${encodeURIComponent(result.simulated ? 'Simulation locale enregistrée : configurez Resend pour envoyer.' : 'Notification envoyée.')}`); } catch (error) { await client.from('booking_notifications').update({ status: 'failed', attempts: 1, last_error: error instanceof Error ? error.message : 'Erreur d’envoi' }).eq('id', id); return redirect('/admin/agenda?message=Échec%20d’envoi%20visible%20dans%20la%20boîte%20d’envoi.'); }
+  const outcomes = await deliverBookingNotification(client, id, { bookingId: appointment.id, service: appointment.service_slug, startAt: appointment.start_at, customerName: appointment.customer_name, customerEmail: appointment.customer_email, kind: event as 'confirmed' | 'changed' | 'cancelled' });
+  const failed = outcomes.filter((outcome) => !outcome.delivered && !outcome.skipped);
+  return redirect(`/admin/agenda?message=${encodeURIComponent(failed.length ? 'Échec d’envoi visible dans la boîte d’envoi.' : 'Relance traitée.')}`);
 };
