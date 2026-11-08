@@ -20,6 +20,13 @@ Puis ouvrir `http://localhost:4321`. Vérifier la production avec `npm run check
 
 Les RLS empêchent toute écriture hors du compte ayant ce rôle. Le bucket `artworks` est privé : les originaux téléversés sont contrôlés (JPEG/PNG/WebP, 10 Mo, 36 MP), redressés et servis en WebP 2000 px max. Pour l’affichage public des médias publiés, ajouter une route serveur qui ne délivre des URLs signées que pour une œuvre `published`.
 
+## Réservations et agenda
+
+1. Exécuter les migrations dans l’ordre (`001_cartonancienne.sql`, puis `002_booking_agenda.sql` à `005_fix_agenda_move_ambiguity.sql`). Elles créent les offres réservable, les plages, les rendez-vous et la boîte d’envoi. Les instants sont en UTC ; les saisies et l’affichage sont en `Europe/Paris`. La contrainte PostgreSQL `appointments_no_active_overlap` bloque les chevauchements, même en cas de réservations simultanées.
+2. Connectée avec `C@rtosev`, Séverine ouvre des plages dans `/admin/agenda`. Aucun créneau n’est inventé ni public avant cette action. Les blocages qui recouvrent un rendez-vous sont refusés.
+3. Pour l’envoi réel, créer une clé Resend et définir `PRIVATE_RESEND_API_KEY`, `PRIVATE_ADMIN_EMAIL`, `PRIVATE_MAIL_FROM` et `PRIVATE_BOOKING_MAIL_MODE=live` dans l’environnement du serveur. Le mode est `simulation` par défaut : il ne transmet aucun e-mail. Les notifications en attente ou en échec restent visibles et relançables depuis l’agenda. Les déplacements et annulations confirment d’abord la transaction puis tentent l’envoi : un échec ne revient jamais sur le rendez-vous.
+4. Les invitations `.ics` ont un UID stable dérivé du rendez-vous, ce qui permet aux mises à jour/annulations de viser le même événement.
+
 ## Contenu à confirmer
 
 Les tarifs, durées et créneaux de tarot, les dates/lieux/prix/liens de réservation des ateliers, l’adresse de contact et les liens précis vers les articles de presse ne figuraient pas dans les sources exploitables. Ils sont signalés dans l’interface plutôt qu’inventés.
