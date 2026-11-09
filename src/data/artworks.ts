@@ -9,10 +9,12 @@ export type Artwork = {
   title: string;
   category: ArtworkCategory;
   categoryLabel: string;
-  image: ImageMetadata;
+  image?: ImageMetadata;
+  imageUrl?: string;
   alt: string;
   credit: string;
   description: string;
+  year?: number | null;
 };
 
 export const artworks: Artwork[] = [

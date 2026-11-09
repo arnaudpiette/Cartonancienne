@@ -2,5 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArtworkGallery from '../components/ArtworkGallery.astro';
 import { artworks } from '../data/artworks';
+import { publishedPortfolio } from '../lib/portfolio';
+const remoteArtworks = await publishedPortfolio(Astro.cookies, Astro.request, 'ceramique');
+const galleryArtworks = [...remoteArtworks, ...artworks.filter((local) => local.category === 'ceramique' && !remoteArtworks.some((remote) => remote.slug === local.slug))];
 ---
-<BaseLayout title="Céramiques"><section class="page gallery-page"><p class="eyebrow">Collection</p><h1>Terre &amp; Mer.es</h1><p>Objets singuliers, céramiques peintes et matières marines façonnés à l’atelier.</p></section><ArtworkGallery artworks={artworks} title="La collection" /></BaseLayout>
+<BaseLayout title="Céramiques"><section class="page gallery-page"><p class="eyebrow">Collection</p><h1>Terre &amp; Mer.es</h1><p>Objets singuliers, céramiques peintes et matières marines façonnés à l’atelier.</p></section><ArtworkGallery artworks={galleryArtworks} title="La collection" /></BaseLayout>
