@@ -12,3 +12,5 @@ src/assets/originals/illustration.jpg
 .DS_Store
 *.zip
 *.pages
+.vercel
+.env*
