@@ -13,12 +13,27 @@ const { title = 'La Cartonancienne', description = 'Les signes, les histoires et
   <body>
     <header class="site-header">
       <a class="logo" href="/" aria-label="La Cartonancienne, accueil">La Carton<span>ancienne</span></a>
-      <nav aria-label="Navigation principale">
+      <nav class="desktop-nav" aria-label="Navigation principale">
         <a href="/illustrations">Illustrations</a><a href="/ceramiques">Céramiques</a><a href="/tarot">Tarot</a><a href="/ateliers">Ateliers</a><a href="/bonjour">À propos</a><a href="/contact">Contact</a>
       </nav>
       <a class="login" href="/login">Login</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu<span aria-hidden="true">+</span></button>
     </header>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <nav aria-label="Navigation mobile">
+        <a href="/illustrations">Illustrations</a><a href="/ceramiques">Céramiques</a><a href="/tarot">Tarot</a><a href="/ateliers">Ateliers</a><a href="/bonjour">À propos</a><a href="/contact">Contact</a><a class="mobile-login" href="/login">Login</a>
+      </nav>
+    </div>
     <main><slot /></main>
     <footer><a href="/">La Cartonancienne</a><span>© Séverine Piette</span><a href="/contact">Écrire à l’atelier</a></footer>
   </body>
 </html>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+  const menuLinks = menu ? Array.from(menu.querySelectorAll<HTMLElement>('a')) : [];
+  const closeMenu = () => { if (!toggle || !menu) return; toggle.setAttribute('aria-expanded', 'false'); menu.hidden = true; document.body.classList.remove('menu-open'); };
+  toggle?.addEventListener('click', () => { if (!menu) return; const open = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(open)); menu.hidden = !open; document.body.classList.toggle('menu-open', open); if (open) menuLinks[0]?.focus(); });
+  menuLinks.forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeMenu(); toggle?.focus(); } if (event.key === 'Tab' && menu && !menu.hidden && menuLinks.length) { const first = menuLinks[0], last = menuLinks.at(-1); if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } } });
+</script>
