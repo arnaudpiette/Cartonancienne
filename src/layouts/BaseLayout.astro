@@ -1,6 +1,15 @@
 ---
 import '../styles/global.scss';
 const { title = 'La Cartonancienne', description = 'Les signes, les histoires et les objets de Séverine Piette.' } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const navLinks = [
+  { href: '/illustrations', label: 'Illustrations' },
+  { href: '/ceramiques', label: 'Céramiques' },
+  { href: '/tarot', label: 'Tarot' },
+  { href: '/ateliers', label: 'Ateliers' },
+  { href: '/bonjour', label: 'À propos' },
+  { href: '/contact', label: 'Contact' },
+];
 ---
 <!doctype html>
 <html lang="fr">
@@ -14,7 +23,7 @@ const { title = 'La Cartonancienne', description = 'Les signes, les histoires et
     <header class="site-header">
       <a class="logo" href="/" aria-label="La Cartonancienne, accueil">La Carton<span>ancienne</span></a>
       <nav class="desktop-nav" aria-label="Navigation principale">
-        <a href="/illustrations">Illustrations</a><a href="/ceramiques">Céramiques</a><a href="/tarot">Tarot</a><a href="/ateliers">Ateliers</a><a href="/bonjour">À propos</a><a href="/contact">Contact</a>
+        {navLinks.map(({ href, label }) => <a href={href} aria-current={currentPath === href ? 'page' : undefined}>{label}</a>)}
       </nav>
       <a class="login" href="/login">Login</a>
       <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -26,7 +35,7 @@ const { title = 'La Cartonancienne', description = 'Les signes, les histoires et
     </header>
     <div class="mobile-menu" id="mobile-menu" hidden>
       <nav aria-label="Navigation mobile">
-        <a href="/illustrations">Illustrations</a><a href="/ceramiques">Céramiques</a><a href="/tarot">Tarot</a><a href="/ateliers">Ateliers</a><a href="/bonjour">À propos</a><a href="/contact">Contact</a><a class="mobile-login" href="/login">Login</a>
+        {navLinks.map(({ href, label }) => <a href={href} aria-current={currentPath === href ? 'page' : undefined}>{label}</a>)}<a class="mobile-login" href="/login" aria-current={currentPath === '/login' ? 'page' : undefined}>Login</a>
       </nav>
     </div>
     <main><slot /></main>

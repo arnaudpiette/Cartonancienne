@@ -39,3 +39,30 @@
   .menu-toggle[aria-expanded="true"] .menu-icon-close { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) { .menu-icon-open,.menu-icon-close { transition: none; } }
+
+/* Interior pages */
+.site-header nav a[aria-current="page"] { border-bottom-color: currentColor; }
+.mobile-menu a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .16em; }
+footer { border-top: 1px solid #dfe5e8; line-height: 1.5; }
+footer a { min-height: 44px; display: inline-flex; align-items: center; }
+footer span { align-self: center; }
+footer a:focus-visible,.about-links a:focus-visible,.contact-page a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.about-page,.contact-page { max-width: 1260px; padding-top: clamp(72px, 8vw, 130px); padding-bottom: clamp(90px, 10vw, 150px); }
+.about-intro h1,.contact-intro h1 { margin: 1.1rem 0 clamp(28px, 4vw, 54px); }
+.about-intro h1 { max-width: 980px; font-size: clamp(68px, 8vw, 120px); line-height: .9; }
+.about-intro .about-lead { max-width: 650px; margin: 0 0 18px; font: clamp(26px, 3vw, 40px)/1.08 var(--serif); }
+.about-intro .about-practices { margin: 0 0 clamp(34px, 5vw, 70px); font: 10px/1.5 var(--mono); letter-spacing: .04em; text-transform: uppercase; }
+.about-composition { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(36px, 7vw, 100px); align-items: start; }
+.about-portrait { margin: 0; }.about-portrait img { display: block; width: 100%; height: clamp(380px, 46vw, 620px); object-fit: cover; object-position: center 38%; }.about-portrait figcaption { padding-top: 12px; font-size: 10px; }
+.about-copy > p { margin: 0; max-width: 510px; font: clamp(25px, 2.5vw, 34px)/1.16 var(--serif); }
+.about-links { margin-top: clamp(36px, 5vw, 70px); border-top: 1px solid var(--ink); }.about-links .eyebrow { margin: 17px 0 10px; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .08em; }.about-links a { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 48px; border-bottom: 1px solid #dfe5e8; font: clamp(20px, 2vw, 27px)/1.1 var(--serif); }.about-links a:hover,.contact-list a:hover,.contact-return:hover { font-style: italic; }
+.contact-page { max-width: 1120px; }.contact-intro p:last-child { max-width: 600px; margin: 0; font: clamp(26px, 3vw, 38px)/1.15 var(--serif); }
+.contact-selection { margin-top: clamp(44px, 6vw, 85px); padding: clamp(25px, 4vw, 48px); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); background: var(--mist); }.contact-selection .eyebrow,.contact-choices-heading .eyebrow,.contact-direct .eyebrow { font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }.contact-selection h2,.contact-choices-heading h2 { margin: .7rem 0 1rem; font: 400 clamp(38px, 5vw, 68px)/.95 var(--serif); letter-spacing: -.035em; }.contact-selection p:not(.eyebrow) { margin: 0; font: 22px/1.2 var(--serif); }.contact-action,.contact-return { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; margin: 16px 25px 0 0; border-bottom: 1px solid var(--ink); font-size: 10px; text-transform: uppercase; }
+.contact-choices { margin-top: clamp(60px, 8vw, 120px); }.contact-choices-heading { margin-bottom: clamp(30px, 4vw, 52px); }.contact-list { border-top: 1px solid var(--ink); }.contact-list article { display: grid; grid-template-columns: minmax(60px, .2fr) minmax(0, 1fr); gap: 20px; padding: clamp(25px, 4vw, 48px) 0; border-bottom: 1px solid #aabac8; }.contact-number { font-size: 10px; letter-spacing: .08em; }.contact-list h3 { margin: 0 0 12px; font: 400 clamp(34px, 4vw, 52px)/.98 var(--serif); letter-spacing: -.03em; }.contact-list p { margin: 0 0 15px; max-width: 600px; font: 21px/1.25 var(--serif); }.contact-list article a { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; margin-right: 25px; font-size: 10px; text-transform: uppercase; text-decoration: underline; text-underline-offset: 5px; }
+.contact-direct { margin-top: clamp(50px, 7vw, 100px); }.contact-direct a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; max-width: 100%; overflow-wrap: anywhere; font: clamp(20px, 2.5vw, 30px)/1.2 var(--serif); text-decoration: underline; text-underline-offset: 5px; }
+@media (max-width: 760px) {
+  .about-page,.contact-page { padding-top: clamp(65px, 15vw, 100px); padding-bottom: 22vw; }
+  .about-intro h1 { font-size: clamp(61px, 13vw, 96px); }.about-intro .about-practices { margin-bottom: 32px; }
+  .about-composition { grid-template-columns: 1fr; gap: 35px; }.about-portrait img { height: min(105vw, 570px); object-position: center 38%; }.about-copy > p { font-size: 27px; }
+  .contact-intro h1 { margin-bottom: 30px; }.contact-list article { grid-template-columns: 34px minmax(0, 1fr); gap: 12px; }.contact-list article a { display: flex; width: fit-content; margin-right: 0; }.contact-action,.contact-return { margin-right: 12px; }
+}
