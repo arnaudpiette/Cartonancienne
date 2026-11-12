@@ -1,6 +1,20 @@
 ---
+import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contactEmail, contactHref, contactMotif } from '../data/contact';
-const motif = contactMotif(Astro.url.searchParams.get('motif') || undefined);
+const requested = Astro.url.searchParams.get('motif');
+const knownMotifs = ['tarot-solo', 'roue-astrologique', 'tarot-evenementiel', 'bon-tarot', 'ateliers', 'privatisation'];
+const selected = requested === 'oeuvre' ? { label: 'Une œuvre ou une commande', href: `mailto:${contactEmail}?subject=${encodeURIComponent('Demande — œuvre ou commande')}&body=${encodeURIComponent('Bonjour Séverine,\n\nJe souhaite vous parler d’une œuvre ou d’une commande.\n\nMerci,')}` } : requested && knownMotifs.includes(requested) ? { label: contactMotif(requested).label, href: contactHref(requested) } : null;
 ---
-<BaseLayout title="Contact"><section class="page contact-page"><p class="eyebrow">L’atelier vous répond</p><h1>Contact</h1><p>Pour une commande, une œuvre, un atelier ou une séance.</p><div class="contact-panel"><p class="eyebrow">Votre demande</p><h2>{motif.label}</h2><p>Préparez votre message : l’objet et le début du texte sont déjà renseignés.</p><a class="contact-email" href={contactHref(Astro.url.searchParams.get('motif') || undefined)}>{contactEmail}</a><a class="text-link" href={contactHref(Astro.url.searchParams.get('motif') || undefined)}>Ouvrir votre messagerie →</a></div><p class="notice">L’adresse e-mail est confirmée dans les documents fournis. L’envoi depuis le site n’est pas configuré, aucun message de test n’a donc été envoyé.</p></section></BaseLayout>
+<BaseLayout title="Contact">
+  <section class="page contact-page" aria-labelledby="contact-title">
+    <div class="contact-intro"><p class="eyebrow">L’atelier vous répond</p><h1 id="contact-title">Contact</h1><p>Pour une commande, une œuvre, un atelier ou une séance.</p></div>
+    {selected && <section class="contact-selection" aria-labelledby="contact-selection-title"><p class="eyebrow">Votre demande</p><h2 id="contact-selection-title">{selected.label}</h2><p>L’objet et le début de votre message sont préparés dans votre messagerie.</p><a class="contact-action" href={selected.href}>Ouvrir votre messagerie <ArrowIcon /></a><a class="contact-return" href="/contact#demandes">Voir toutes les demandes <span aria-hidden="true">↓</span></a></section>}
+    <section class="contact-choices" id="demandes" aria-labelledby="contact-choices-title"><div class="contact-choices-heading"><p class="eyebrow">Écrire à l’atelier</p><h2 id="contact-choices-title">Comment puis-je vous aider&nbsp;?</h2></div><div class="contact-list">
+      <article><span class="contact-number" aria-hidden="true">01</span><div><h3>Une œuvre ou une commande</h3><p>Une idée, un objet, une histoire à faire naître ?</p><a href="/contact?motif=oeuvre">Parler d’une œuvre ou d’une commande <ArrowIcon /></a></div></article>
+      <article><span class="contact-number" aria-hidden="true">02</span><div><h3>Un tirage de tarot</h3><p>Une question à poser, un domaine à explorer avec le tarot de Marseille.</p><a href="/contact?motif=tarot-solo">Parler d’un tirage solo <ArrowIcon /></a><a href="/contact?motif=roue-astrologique">Parler de la roue astrologique <ArrowIcon /></a><a href="/contact?motif=tarot-evenementiel">Parler d’un événement <ArrowIcon /></a><a href="/contact?motif=bon-tarot">En savoir plus sur Le Bon Tarot <ArrowIcon /></a></div></article>
+      <article><span class="contact-number" aria-hidden="true">03</span><div><h3>Un atelier ou une privatisation</h3><p>Pour un groupe, une équipe ou une occasion particulière, parlons du format adapté.</p><a href="/contact?motif=ateliers">Demander les prochaines dates <ArrowIcon /></a><a href="/contact?motif=privatisation">Demander une privatisation <ArrowIcon /></a></div></article>
+    </div></section>
+    <div class="contact-direct"><p class="eyebrow">Écrire directement</p><a href={`mailto:${contactEmail}`} aria-label={`Écrire directement à ${contactEmail}`}>{contactEmail} <ArrowIcon /></a></div>
+  </section>
+</BaseLayout>

@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArtworkImage from '../components/ArtworkImage.astro';
 import ArtworkGallery from '../components/ArtworkGallery.astro';
-import { artworks, pendingIllustrations } from '../data/artworks';
+import { artworks } from '../data/artworks';
 import { publishedPortfolio } from '../lib/portfolio';
 import egg from '../assets/originals/oeuf-phenix-ivoire-ombre-douce.png'; import atelier from '../assets/originals/atelier.jpeg'; import tarot from '../assets/originals/tarot.jpg'; import severine from '../assets/originals/severine.jpg';
 const remoteArtworks = await publishedPortfolio(Astro.cookies, Astro.request, undefined, true);
@@ -16,8 +16,7 @@ const cabinetArtworks = [...remoteArtworks, ...artworks.filter((local) => !remot
   </section>
   <section id="atelier" class="atelier-section" aria-labelledby="atelier-caption"><figure><ArtworkImage src={atelier} alt="Bureau couvert de dessins, d’objets et de carnets dans l’atelier de Séverine Piette" widths={[768,1200,1800,2400]} sizes="100vw" loading="eager" class="atelier-wide" /><figcaption id="atelier-caption">Dans l’atelier de Séverine</figcaption></figure></section>
   <ArtworkGallery artworks={cabinetArtworks} />
-  <p class="pending-work">{pendingIllustrations[0]}</p>
-  <nav class="gallery-links" aria-label="Galeries complètes"><a class="text-link" href="/illustrations">Toutes les illustrations →</a><a class="text-link" href="/ceramiques">Toute la collection Terre &amp; Mer.es →</a></nav>
+  <nav class="gallery-links" aria-label="Galeries complètes"><a class="text-link" href="/illustrations">Toutes les illustrations <span aria-hidden="true">→</span></a><a class="text-link" href="/ceramiques">Toute la collection Terre &amp; Mer <span aria-hidden="true">→</span></a></nav>
   <section class="split-links"><a href="/tarot"><ArtworkImage src={tarot} alt="Cartes du Bon Tarot" /><span>À la carte</span><h2>Tarot</h2><b>Découvrir →</b></a><a href="/ateliers"><span class="large-symbol">✦</span><span>Faire ensemble</span><h2>Ateliers</h2><b>Voir l’agenda →</b></a></section>
   <section class="about-tease section"><div><p class="eyebrow">Bonjour</p><h2>Je collectionne les signes, les histoires et les matières.</h2><a class="text-link" href="/bonjour">Rencontrer Séverine →</a></div><ArtworkImage src={severine} alt="Séverine Piette, portrait par Charles Delcourt" /></section>
   <section class="press section"><p class="eyebrow">On parle de moi</p><h2>Dans la presse</h2><p>Une sélection d’articles et de rencontres autour de l’atelier.</p><a class="text-link" href="/contact">Voir les parutions →</a></section>

@@ -1,4 +1,15 @@
 ---
+import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro'; import ArtworkImage from '../components/ArtworkImage.astro'; import portrait from '../assets/originals/severine.jpg';
 ---
-<BaseLayout title="Bonjour"><section class="page"><p class="eyebrow">À propos</p><h1>Bonjour, moi c’est Séverine.</h1><div class="page-grid"><ArtworkImage src={portrait} alt="Portrait de Séverine Piette, crédit Charles Delcourt" /><div><p>Je travaille les images et la terre comme des passages : pour faire apparaître des histoires, des animaux, des signes et des objets à garder près de soi.</p><small>Portrait : Charles Delcourt.</small></div></div></section></BaseLayout>
+<BaseLayout title="Bonjour">
+  <section class="page about-page" aria-labelledby="about-title">
+    <div class="about-intro"><p class="eyebrow">À propos</p><h1 id="about-title">Bonjour, moi c’est Séverine.</h1><p class="about-lead">Je collectionne les signes, les histoires et les matières.</p><p class="about-practices">Illustrations · Céramiques · Tarot · Ateliers</p></div>
+    <div class="about-composition">
+      <figure class="about-portrait"><ArtworkImage src={portrait} alt="Portrait de Séverine Piette" loading="eager" /><figcaption>Portrait : Charles Delcourt.</figcaption></figure>
+      <div class="about-copy"><p>Je travaille les images et la terre comme des passages : pour faire apparaître des histoires, des animaux, des signes et des objets à garder près de soi.</p>
+        <nav class="about-links" aria-label="Découvrir l’univers de Séverine"><p class="eyebrow">Explorer l’atelier</p><a href="/illustrations">Découvrir les illustrations <ArrowIcon /></a><a href="/ceramiques">Découvrir les céramiques <ArrowIcon /></a><a href="/tarot">Explorer le tarot <ArrowIcon /></a><a href="/ateliers">Découvrir les ateliers <ArrowIcon /></a><a href="/contact">Écrire à l’atelier <ArrowIcon /></a></nav>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

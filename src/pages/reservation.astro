@@ -1,13 +1,82 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { bookingServices, isBookingService, type BookingServiceSlug } from '../data/booking';
-import { supabaseServer } from '../lib/supabase';
+import { bookingServices, isBookingService, parisDay, paymentOnSite } from '../data/booking';
+import '../styles/reservation.scss';
 const requested = Astro.url.searchParams.get('offre');
-const service: BookingServiceSlug = isBookingService(requested) ? requested : 'tarot-solo';
-const day = Astro.url.searchParams.get('jour') || new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Paris' });
-const client = supabaseServer(Astro.cookies, Astro.request);
-const { data: slots } = client ? await client.rpc('public_available_slots', { p_service_slug: service, p_day: day }) : { data: [] };
-const confirmed = Astro.url.searchParams.get('confirmation');
-const slotLabel = (value: string) => new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }).format(new Date(value));
+const selected = isBookingService(requested) ? requested : null;
+Astro.response.headers.set('Cache-Control', 'no-store');
 ---
-<BaseLayout title="Réserver un tirage"><section class="reservation page"><p class="eyebrow">Almanach des rendez-vous</p><h1>Réserver un tirage</h1>{confirmed ? <p class="notice" role="status">Votre demande est confirmée. Un récapitulatif vous sera envoyé.</p> : <><form class="reservation-choice" method="get"><label for="offre">Votre tirage</label><select id="offre" name="offre">{Object.entries(bookingServices).map(([slug, offer]) => <option value={slug} selected={slug === service}>{offer.title} · {offer.price} € · {offer.duration} min</option>)}</select><label for="jour">Choisir un jour</label><input id="jour" name="jour" type="date" value={day} min={new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Paris' })} /><button type="submit">Voir les horaires</button></form><section class="slot-list" aria-labelledby="slots-title"><div class="cabinet-heading"><span aria-hidden="true"></span><p class="eyebrow">Heures de Paris</p><span aria-hidden="true"></span></div><h2 id="slots-title">Créneaux disponibles</h2>{slots?.length ? <form method="post" action="/api/reservations"><input type="hidden" name="service" value={service} /><input type="hidden" name="day" value={day} /><fieldset><legend>Choisir un horaire</legend>{slots.map((slot: { start_at: string; end_at: string }) => <label class="slot"><input type="radio" name="startAt" value={slot.start_at} required />{slotLabel(slot.start_at)}</label>)}</fieldset><label for="name">Votre nom</label><input id="name" name="name" autocomplete="name" required maxlength="120" /><label for="email">Votre e-mail</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" /><p class="notice">Vous confirmez un {bookingServices[service].title.toLowerCase()} de {bookingServices[service].duration} minutes à {bookingServices[service].price} €.</p><button type="submit">Confirmer le rendez-vous</button></form> : <p class="notice">Aucun créneau n’est ouvert pour ce jour. Séverine publiera ses disponibilités depuis son agenda.</p>}</section></>}</section></BaseLayout>
+<BaseLayout title="Réserver un tirage">
+  <section class="reservation booking page" id="booking">
+    <p class="eyebrow">Almanach des rendez-vous</p>
+    <h1>Réserver un tirage</h1>
+    <noscript><p class="notice">Activez JavaScript pour parcourir les étapes de réservation, ou <a href="/contact">contactez l’atelier</a>.</p></noscript>
+    <nav aria-label="Étapes de réservation" id="booking-progress">
+      <ol class="booking-progress">
+        {['Votre tirage', 'Date et horaire', 'Vos coordonnées', 'Vérification'].map((label, index) => <li data-progress={index + 1} aria-current={index === 0 ? 'step' : undefined}><span aria-hidden="true">0{index + 1}</span>{label}</li>)}
+      </ol>
+    </nav>
+    <p class="booking-error" id="booking-error" role="alert" tabindex="-1" hidden></p>
+    <form id="booking-form" novalidate>
+      <section data-step="1" aria-labelledby="step-1-title">
+        <p class="eyebrow">Étape 1 sur 4</p>
+        <h2 id="step-1-title" tabindex="-1">Choisir son tirage</h2>
+        <fieldset class="booking-services">
+          <legend class="booking-sr-only">Choisissez votre séance</legend>
+          {Object.entries(bookingServices).map(([slug, offer], index) => <label class="booking-service">
+            <input type="radio" name="service" value={slug} checked={selected === slug} />
+            <span class="eyebrow" aria-hidden="true">Tirage 0{index + 1} <span class="booking-selected"> · Sélectionné</span></span>
+            <strong>{offer.title}</strong><span class="booking-description">{offer.description}</span>
+            <span class="booking-price">{offer.price} € <span aria-hidden="true">·</span> {offer.duration} minutes</span>
+          </label>)}
+        </fieldset>
+        <p class="booking-note">{paymentOnSite}</p>
+        <div class="booking-actions"><button type="button" data-next disabled={!selected}>Continuer <span aria-hidden="true">→</span></button></div>
+      </section>
+      <section data-step="2" aria-labelledby="step-2-title" hidden>
+        <p class="eyebrow">Étape 2 sur 4</p>
+        <h2 id="step-2-title" tabindex="-1">Choisir une date et un horaire</h2>
+        <p class="booking-context" data-service-context></p>
+        <label for="booking-day">Votre date · heures de Paris</label>
+        <input id="booking-day" name="day" type="date" value={parisDay()} min={parisDay()} required />
+        <div id="booking-slots" aria-busy="false">
+          <p class="booking-note" id="slots-status" role="status"></p>
+          <button type="button" id="slots-retry" class="booking-secondary" hidden>Réessayer</button>
+          <fieldset id="slots-fieldset" hidden><legend>Choisir un horaire · Europe/Paris</legend><div class="booking-slots" id="slots-options"></div></fieldset>
+        </div>
+        <div class="booking-actions"><button type="button" data-back class="booking-secondary">Retour</button><button type="button" data-next disabled>Continuer <span aria-hidden="true">→</span></button></div>
+      </section>
+      <section data-step="3" aria-labelledby="step-3-title" hidden>
+        <p class="eyebrow">Étape 3 sur 4</p>
+        <h2 id="step-3-title" tabindex="-1">Vos coordonnées</h2>
+        <div class="booking-fields">
+          <div><label for="booking-first-name">Prénom</label><input id="booking-first-name" name="firstName" autocomplete="given-name" maxlength="60" required aria-describedby="firstName-error" /><span class="booking-field-error" id="firstName-error"></span></div>
+          <div><label for="booking-last-name">Nom</label><input id="booking-last-name" name="lastName" autocomplete="family-name" maxlength="59" required aria-describedby="lastName-error" /><span class="booking-field-error" id="lastName-error"></span></div>
+          <div class="booking-email"><label for="booking-email">Adresse e-mail</label><input id="booking-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="email-error" /><span class="booking-field-error" id="email-error"></span></div>
+        </div>
+        <p class="booking-note">Votre prénom, votre nom et votre adresse e-mail servent à gérer votre rendez-vous et ses notifications. Pour toute question sur vos informations, <a href="/contact">contactez l’atelier</a>.</p>
+        <div class="booking-actions"><button type="button" data-back class="booking-secondary">Retour</button><button type="button" data-next>Continuer <span aria-hidden="true">→</span></button></div>
+      </section>
+      <section data-step="4" aria-labelledby="step-4-title" hidden>
+        <p class="eyebrow">Étape 4 sur 4</p>
+        <h2 id="step-4-title" tabindex="-1">Vérifier et confirmer</h2>
+        <dl class="booking-summary" id="booking-summary"></dl>
+        <p class="booking-payment">{paymentOnSite}</p>
+        <p class="booking-note" id="booking-submit-status" role="status"></p>
+        <div class="booking-actions"><button type="button" data-back class="booking-secondary">Retour</button><button type="submit" id="booking-submit">Confirmer ma réservation</button></div>
+      </section>
+    </form>
+    <section id="booking-confirmed" aria-labelledby="confirmed-title" hidden>
+      <p class="eyebrow">Votre rendez-vous est enregistré</p>
+      <h2 id="confirmed-title" tabindex="-1">Votre réservation est confirmée.</h2>
+      <dl class="booking-summary" id="confirmed-summary"></dl>
+      <p class="booking-payment">{paymentOnSite}</p>
+      <p class="booking-note" id="booking-mail-status"></p>
+      <a class="text-link" href="/contact">Une question sur votre rendez-vous ? Contactez l’atelier →</a>
+    </section>
+  </section>
+</BaseLayout>
+<script>
+  import { initBooking } from '../scripts/booking';
+  initBooking();
+</script>

@@ -29,7 +29,25 @@ Les RLS empêchent toute écriture hors du compte ayant ce rôle. Le bucket `art
 
 ## Contenu à confirmer
 
-Les tarifs, durées et créneaux de tarot, les dates/lieux/prix/liens de réservation des ateliers, l’adresse de contact et les liens précis vers les articles de presse ne figuraient pas dans les sources exploitables. Ils sont signalés dans l’interface plutôt qu’inventés.
+Le brief de reprise confirme Tarot Solo (60 minutes, 50 €) et Tarot Roue (90 minutes, 70 €), avec paiement exclusivement sur place. Les créneaux dépendent de l’agenda effectivement configuré. Les autres contenus annoncés historiquement doivent être vérifiés dans leurs sources avant publication.
+
+## Tunnel de réservation et recette
+
+Le tunnel comporte quatre vues successives dans `/reservation`, puis une confirmation après enregistrement. Les coordonnées restent en mémoire pendant les retours ; elles ne sont pas placées dans l’URL ni dans un stockage persistant du navigateur.
+
+La migration additive `009_booking_request_idempotency.sql` ajoute la reconnaissance des nouvelles tentatives réseau. Elle a été validée en environnement isolé. Le nouveau serveur appelle `create_public_booking_once` ; sans cette fonction, il refuse de confirmer une réservation. Pour une base déjà utilisée, appliquer 009 et `20261111222342_keep_legacy_booking_rpc_during_rollout.sql` dans une seule transaction : cette transition conserve l’ancienne RPC pendant la migration des serveurs. Ne retirer cet accès historique qu’après migration de tous les appelants et autorisation de mise en service.
+
+Les commandes, résultats, limites et observations hors périmètre sont détaillés dans [reservation-qa.md](reservation-qa.md).
+
+## E-mails de réservation
+
+Les confirmations, déplacements et annulations partent de `La Cartonancienne <reservations@lacartonancienne.com>`. Les notifications internes arrivent à l’adresse définie dans `PRIVATE_ADMIN_EMAIL`. Les réponses des clients sont dirigées vers cette adresse ; Séverine peut répondre aux notifications internes directement au client.
+
+Configurer dans Vercel Production `PRIVATE_MAIL_FROM`, `PRIVATE_ADMIN_EMAIL`, la clé Resend serveur existante et `PRIVATE_BOOKING_MAIL_MODE=live`. Garder `simulation` pour les tests locaux et les previews de recette. Aucun secret ne doit figurer dans le dépôt. Le domaine doit être vérifié dans Resend.
+
+Appliquer également `20261112000222_notification_email_event_timestamp.sql` avant cette version du serveur. Elle ajoute à la réponse de réclamation de notification son horodatage d’origine. Les relances utilisent une clé d’idempotence par notification et destinataire, avec un contenu et un ICS stables ; un échec d’e-mail ne supprime jamais le rendez-vous. La boîte d’envoi reste consultable et relançable dans l’agenda administrateur.
+
+Le réglage `Reply-To` assure les réponses vers Séverine. Il ne crée pas de boîte mail ni de redirection chez one.com : les messages écrits directement à l’adresse d’expédition dépendent de la configuration de messagerie existante du domaine.
 
 ## Images
 

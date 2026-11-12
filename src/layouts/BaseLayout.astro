@@ -1,6 +1,15 @@
 ---
 import '../styles/global.scss';
 const { title = 'La Cartonancienne', description = 'Les signes, les histoires et les objets de Séverine Piette.' } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const navLinks = [
+  { href: '/illustrations', label: 'Illustrations' },
+  { href: '/ceramiques', label: 'Céramiques' },
+  { href: '/tarot', label: 'Tarot' },
+  { href: '/ateliers', label: 'Ateliers' },
+  { href: '/bonjour', label: 'À propos' },
+  { href: '/contact', label: 'Contact' },
+];
 ---
 <!doctype html>
 <html lang="fr">
@@ -13,12 +22,33 @@ const { title = 'La Cartonancienne', description = 'Les signes, les histoires et
   <body>
     <header class="site-header">
       <a class="logo" href="/" aria-label="La Cartonancienne, accueil">La Carton<span>ancienne</span></a>
-      <nav aria-label="Navigation principale">
-        <a href="/illustrations">Illustrations</a><a href="/ceramiques">Céramiques</a><a href="/tarot">Tarot</a><a href="/ateliers">Ateliers</a><a href="/bonjour">À propos</a><a href="/contact">Contact</a>
+      <nav class="desktop-nav" aria-label="Navigation principale">
+        {navLinks.map(({ href, label }) => <a href={href} aria-current={currentPath === href ? 'page' : undefined}>{label}</a>)}
       </nav>
       <a class="login" href="/login">Login</a>
+      <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path class="menu-icon-open" d="M3 6h18M3 12h18M3 18h18" />
+          <path class="menu-icon-close" d="M5 5l14 14M19 5L5 19" />
+        </svg>
+      </button>
     </header>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <nav aria-label="Navigation mobile">
+        {navLinks.map(({ href, label }) => <a href={href} aria-current={currentPath === href ? 'page' : undefined}>{label}</a>)}<a class="mobile-login" href="/login" aria-current={currentPath === '/login' ? 'page' : undefined}>Login</a>
+      </nav>
+    </div>
     <main><slot /></main>
     <footer><a href="/">La Cartonancienne</a><span>© Séverine Piette</span><a href="/contact">Écrire à l’atelier</a></footer>
   </body>
 </html>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+  const menuLinks = menu ? Array.from(menu.querySelectorAll<HTMLElement>('a')) : [];
+  const closeMenu = () => { if (!toggle || !menu) return; toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Ouvrir le menu'); menu.hidden = true; document.body.classList.remove('menu-open'); };
+  toggle?.addEventListener('click', () => { if (!menu) return; const open = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu'); menu.hidden = !open; document.body.classList.toggle('menu-open', open); if (open) menuLinks[0]?.focus(); });
+  menuLinks.forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && menu && !menu.hidden) { closeMenu(); toggle?.focus(); } if (event.key === 'Tab' && menu && !menu.hidden && menuLinks.length) { const first = menuLinks[0], last = menuLinks.at(-1); if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } } });
+  window.matchMedia('(max-width: 760px)').addEventListener('change', (event) => { if (!event.matches) closeMenu(); });
+</script>

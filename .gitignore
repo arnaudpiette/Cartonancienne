@@ -13,4 +13,7 @@ src/assets/originals/illustration.jpg
 *.zip
 *.pages
 .vercel
+test-results/
+playwright-report/
+supabase/.temp/
 .env*
