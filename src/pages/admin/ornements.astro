@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Ornament from '../../components/Ornament.astro';
+import { ornamentCatalog } from '../../data/ornaments';
+import { isAdmin } from '../../lib/supabase';
+
+if (!await isAdmin(Astro.cookies, Astro.request)) return Astro.redirect('/login');
+---
+<BaseLayout title="Bibliothèque graphique">
+  <section class="page ornament-library" aria-labelledby="ornament-library-title">
+    <p class="eyebrow">C@rtosev · espace privé</p>
+    <h1 id="ornament-library-title">Bibliothèque graphique</h1>
+    <p>Ornements décoratifs du site. Ils restent distincts des œuvres et ne sont jamais publiés dans les galeries.</p>
+    <div class="admin-actions">
+      <a class="login" href="/admin">Retour aux œuvres</a>
+      <form method="post" action="/api/logout"><button>Déconnexion</button></form>
+    </div>
+    <ul class="ornament-library-grid">
+      {ornamentCatalog.map((item) => <li>
+        <Ornament src={item.asset} size="large" />
+        <p><strong>{item.label}</strong><span>{item.section}</span></p>
+      </li>)}
+    </ul>
+  </section>
+</BaseLayout>

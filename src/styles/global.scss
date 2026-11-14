@@ -47,6 +47,59 @@
 }
 @media (prefers-reduced-motion: reduce) { .menu-icon-open,.menu-icon-close { transition: none; } }
 
+/* Engraved ornament library */
+.ornament { display: block; width: clamp(96px, 11vw, 178px); height: auto; object-fit: contain; pointer-events: none; user-select: none; opacity: .92; }
+.ornament--small { width: clamp(68px, 7vw, 112px); }
+.ornament--large { width: clamp(140px, 17vw, 260px); }
+.ornamented-intro,.page-title-row,.ornamented-about-intro { display: flex; justify-content: space-between; align-items: center; gap: clamp(28px, 7vw, 110px); }
+.ornamented-intro>div:first-child,.page-title-row>div:first-child,.ornamented-about-intro>div:first-child { min-width: 0; }
+.ornament-pair,.ornament-trio,.tarot-symbols { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; position: relative; min-width: clamp(180px, 25vw, 350px); }
+.ornament-pair .ornament--small { position: absolute; right: 0; bottom: -12px; }
+.ornament-trio .ornament--small:nth-child(2) { position: absolute; left: -20px; bottom: 0; }
+.ornament-trio .ornament--small:nth-child(3) { position: absolute; right: -12px; top: 0; }
+.tarot-symbols { min-width: clamp(150px, 20vw, 280px); gap: 12px; }
+.tarot-intro-copy>.ornament { justify-self: end; margin-bottom: -8px; }
+.tarot-intro-grid .ornament { width: clamp(68px, 7vw, 112px); height: auto; object-fit: contain; }
+.section-side-ornament { float: right; margin: -5rem 0 1.5rem 2rem; }
+.cabinet-ornament { display: flex; justify-content: center; margin: clamp(60px, 8vw, 120px) auto clamp(-115px, -8vw, -70px); position: relative; z-index: 1; }
+.atelier-section figcaption { display: flex; align-items: center; gap: clamp(12px, 2vw, 28px); }
+.atelier-section figcaption .ornament { flex: 0 0 auto; }
+.split-links .split-ornament { position: relative; inset: auto; width: clamp(92px, 12vw, 180px); height: auto; object-fit: contain; opacity: .9; mix-blend-mode: multiply; margin: auto; }
+.split-links>a:first-child .split-ornament { position: absolute; right: 3vw; top: 3vw; width: clamp(72px, 8vw, 120px); margin: 0; }
+.contact-cta>.ornament { flex: 0 0 auto; filter: brightness(0) invert(1); opacity: .86; margin-right: clamp(24px, 4vw, 70px); }
+.contact-cta p { flex: 1; }
+.login-page,.admin-page { position: relative; }
+.login-ornament { margin: 0 auto clamp(20px, 3vw, 42px); }
+.admin-page-ornament { position: absolute; right: 5vw; top: 7vw; opacity: .22; }
+.ornament-library>p { font-size: clamp(20px, 2.3vw, 30px); }
+.ornament-library-grid { list-style: none; margin: clamp(44px, 6vw, 80px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #d7dfe3; border: 1px solid #d7dfe3; }
+.ornament-library-grid li { min-width: 0; min-height: 285px; padding: 26px 18px 20px; background: var(--paper); display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+.ornament-library-grid .ornament { max-width: 100%; max-height: 190px; }
+.ornament-library-grid p { width: 100%; margin: 18px 0 0; display: grid; gap: 5px; font: 10px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .04em; }
+.ornament-library-grid p span { color: #65788a; }
+
+@media (max-width: 760px) {
+  .ornament { width: clamp(72px, 25vw, 112px); }
+  .ornament--small { width: clamp(54px, 17vw, 76px); }
+  .ornament--large { width: clamp(104px, 34vw, 150px); }
+  .ornamented-intro,.page-title-row,.ornamented-about-intro { align-items: flex-start; gap: 16px; }
+  .ornamented-intro>div:first-child,.page-title-row>div:first-child,.ornamented-about-intro>div:first-child { flex: 1; }
+  .ornament-pair,.ornament-trio,.tarot-symbols { min-width: 108px; align-self: center; }
+  .ornament-pair .ornament--small,.ornament-trio .ornament--small:nth-child(2),.ornament-trio .ornament--small:nth-child(3) { display: none; }
+  .tarot-symbols .ornament--small { position: absolute; right: 0; bottom: -20px; }
+  .section-side-ornament { float: none; margin: -12px 0 24px auto; }
+  .cabinet-ornament { margin: 14vw auto -18vw; }
+  .atelier-section figcaption { gap: 10px; }
+  .atelier-section figcaption .ornament { width: 58px; }
+  .split-links .split-ornament { width: min(34vw, 138px); }
+  .split-links>a:first-child .split-ornament { right: 7vw; top: 7vw; width: 80px; }
+  .contact-cta>.ornament { width: 90px; margin: 0 0 26px auto; }
+  .admin-page-ornament { width: 120px; right: 4vw; top: 12vw; }
+  .ornament-library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ornament-library-grid li { min-height: 220px; padding: 20px 12px 16px; }
+  .ornament-library-grid .ornament { max-height: 135px; }
+}
+
 /* Interior pages */
 .site-header nav a[aria-current="page"] { border-bottom-color: currentColor; }
 .mobile-menu a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .16em; }

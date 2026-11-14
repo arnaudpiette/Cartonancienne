@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
 import { bookingServices, isBookingService, parisDay, paymentOnSite } from '../data/booking';
+import { ornaments } from '../data/ornaments';
 import '../styles/reservation.scss';
 const requested = Astro.url.searchParams.get('offre');
 const selected = isBookingService(requested) ? requested : null;
@@ -8,8 +10,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 ---
 <BaseLayout title="Réserver un tirage">
   <section class="reservation booking page" id="booking">
-    <p class="eyebrow">Almanach des rendez-vous</p>
-    <h1>Réserver un tirage</h1>
+    <div class="page-title-row"><div><p class="eyebrow">Almanach des rendez-vous</p><h1>Réserver un tirage</h1></div><Ornament src={ornaments.celestialWatch} size="large" loading="eager" /></div>
     <noscript><p class="notice">Activez JavaScript pour parcourir les étapes de réservation, ou <a href="/contact">contactez l’atelier</a>.</p></noscript>
     <nav aria-label="Étapes de réservation" id="booking-progress">
       <ol class="booking-progress">

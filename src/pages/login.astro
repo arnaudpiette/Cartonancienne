@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import { ornaments } from '../data/ornaments';
 import { supabaseServer } from '../lib/supabase';
 let error = '';
 if (Astro.request.method === 'POST') {
@@ -10,4 +12,4 @@ if (Astro.request.method === 'POST') {
   else { const { error: authError } = await client.auth.signInWithPassword({ email, password }); if (authError) error = 'Identifiant ou mot de passe incorrect.'; else return Astro.redirect('/admin'); }
 }
 ---
-<BaseLayout title="Login"><section class="page form-wrap"><p class="eyebrow">Espace atelier</p><h1>Login</h1>{error && <p class="notice" role="alert">{error}</p>}<form method="post"><label for="username">Nom d’utilisateur</label><input id="username" name="username" autocomplete="username" required /><label for="password">Mot de passe</label><input id="password" name="password" type="password" autocomplete="current-password" required /><button type="submit">Se connecter</button></form></section></BaseLayout>
+<BaseLayout title="Login"><section class="page form-wrap login-page"><Ornament src={ornaments.moonKey} class="login-ornament" size="large" loading="eager" /><p class="eyebrow">Espace atelier</p><h1>Login</h1>{error && <p class="notice" role="alert">{error}</p>}<form method="post"><label for="username">Nom d’utilisateur</label><input id="username" name="username" autocomplete="username" required /><label for="password">Mot de passe</label><input id="password" name="password" type="password" autocomplete="current-password" required /><button type="submit">Se connecter</button></form></section></BaseLayout>

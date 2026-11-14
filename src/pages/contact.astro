@@ -1,14 +1,16 @@
 ---
 import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
 import { contactEmail, contactHref, contactMotif } from '../data/contact';
+import { ornaments } from '../data/ornaments';
 const requested = Astro.url.searchParams.get('motif');
 const knownMotifs = ['tarot-solo', 'roue-astrologique', 'tarot-evenementiel', 'bon-tarot', 'ateliers', 'privatisation'];
 const selected = requested === 'oeuvre' ? { label: 'Une œuvre ou une commande', href: `mailto:${contactEmail}?subject=${encodeURIComponent('Demande — œuvre ou commande')}&body=${encodeURIComponent('Bonjour Séverine,\n\nJe souhaite vous parler d’une œuvre ou d’une commande.\n\nMerci,')}` } : requested && knownMotifs.includes(requested) ? { label: contactMotif(requested).label, href: contactHref(requested) } : null;
 ---
 <BaseLayout title="Contact">
   <section class="page contact-page" aria-labelledby="contact-title">
-    <div class="contact-intro"><p class="eyebrow">L’atelier vous répond</p><h1 id="contact-title">Contact</h1><p>Pour une commande, une œuvre, un atelier ou une séance.</p></div>
+    <div class="contact-intro ornamented-intro"><div><p class="eyebrow">L’atelier vous répond</p><h1 id="contact-title">Contact</h1><p>Pour une commande, une œuvre, un atelier ou une séance.</p></div><Ornament src={ornaments.sealedEnvelope} size="large" loading="eager" /></div>
     {selected && <section class="contact-selection" aria-labelledby="contact-selection-title"><p class="eyebrow">Votre demande</p><h2 id="contact-selection-title">{selected.label}</h2><p>L’objet et le début de votre message sont préparés dans votre messagerie.</p><a class="contact-action" href={selected.href}>Ouvrir votre messagerie <ArrowIcon /></a><a class="contact-return" href="/contact#demandes">Voir toutes les demandes <span aria-hidden="true">↓</span></a></section>}
     <section class="contact-choices" id="demandes" aria-labelledby="contact-choices-title"><div class="contact-choices-heading"><p class="eyebrow">Écrire à l’atelier</p><h2 id="contact-choices-title">Comment puis-je vous aider&nbsp;?</h2></div><div class="contact-list">
       <article><span class="contact-number" aria-hidden="true">01</span><div><h3>Une œuvre ou une commande</h3><p>Une idée, un objet, une histoire à faire naître ?</p><a href="/contact?motif=oeuvre">Parler d’une œuvre ou d’une commande <ArrowIcon /></a></div></article>
