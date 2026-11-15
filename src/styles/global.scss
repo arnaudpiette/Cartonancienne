@@ -86,6 +86,9 @@
   .ornamented-intro>div:first-child,.page-title-row>div:first-child,.ornamented-about-intro>div:first-child { flex: 1; }
   .ornament-pair,.ornament-trio,.tarot-symbols { min-width: 108px; align-self: center; }
   .ornament-pair .ornament--small,.ornament-trio .ornament--small:nth-child(2),.ornament-trio .ornament--small:nth-child(3) { display: none; }
+  .gallery-page.ornamented-intro { flex-direction: column; align-items: stretch; gap: 0; }
+  .gallery-page .ornament-pair,.gallery-page .ornament-trio { align-self: flex-end; min-width: 0; margin-top: -28px; }
+  .gallery-page .ornament-pair .ornament--large,.gallery-page .ornament-trio .ornament--large { width: 112px; }
   .tarot-symbols .ornament--small { position: absolute; right: 0; bottom: -20px; }
   .section-side-ornament { float: none; margin: -12px 0 24px auto; }
   .cabinet-ornament { margin: 14vw auto -18vw; }
