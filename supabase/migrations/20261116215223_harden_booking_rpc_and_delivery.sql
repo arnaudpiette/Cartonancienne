@@ -1,5 +1,5 @@
--- Local reconstruction. One transaction preserves data and fails closed on unknown contracts.
-begin;
+-- Supabase CLI runs this file and records its version in a single transaction.
+-- If executing manually, wrap the complete file and history registration in one transaction.
 
 -- Keep legacy for rollback, but expose only the retry-safe wrapper.
 revoke execute on function public.create_public_booking(text,timestamptz,text,text) from public, anon, authenticated;
@@ -104,4 +104,3 @@ begin
     raise exception 'index name exists with an unexpected definition';
   end if;
 end $indexes$;
-commit;

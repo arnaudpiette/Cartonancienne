@@ -15,7 +15,7 @@ Les deux projets ont été démarrés successivement, sans partage de volumes :
 | A | `/private/tmp/cartonancienne-local-hardening-a` | `cartonancienne-hardening-a` | onze migrations, `event_at` présent | API 54321, PostgreSQL 54322, Studio 54323 |
 | B | `/private/tmp/cartonancienne-local-hardening-b` | `cartonancienne-hardening-b` | dix migrations jusqu'à `20261111222342`, ancien contrat sans `event_at` | mêmes ports, après arrêt de A |
 
-A : les migrations 001 à 009, `20261111222342_keep_legacy_booking_rpc_during_rollout.sql` et `20261112000222_notification_email_event_timestamp.sql` ont été rejouées, puis la migration corrective a été exécutée deux fois avec `psql`. B : les dix premières ont été rejouées, puis la corrective a été exécutée deux fois. Ces applications explicites par `psql` vérifient le SQL et son idempotence ; elles ne prouvent pas l'enregistrement de la version corrective dans l'historique Supabase.
+A : les migrations 001 à 009, `20261111222342_keep_legacy_booking_rpc_during_rollout.sql` et `20261112000222_notification_email_event_timestamp.sql` ont été rejouées, puis la première version de la corrective, avec transaction explicite, a été exécutée deux fois avec `psql`. B : les dix premières ont été rejouées, puis cette première version a été exécutée deux fois. Ces essais historiques ne prouvaient pas l'enregistrement de version ; les essais CLI de la version corrigée sont décrits ci-dessous.
 
 Les volumes portaient respectivement les suffixes `cartonancienne-hardening-a` et `cartonancienne-hardening-b`. Chaque instance possédait ses propres conteneurs `supabase_db`, `supabase_auth`, `supabase_kong`, `supabase_rest`, `supabase_storage`, `supabase_realtime`, `supabase_inbucket`, `supabase_studio`, `supabase_pg_meta`, `supabase_edge_runtime`, `supabase_vector` et `supabase_analytics`, ainsi que ses volumes `supabase_db`, `supabase_storage` et `supabase_edge_runtime`. A utilisait le réseau `supabase_network_cartonancienne-hardening-a`; B utilisait `cartonancienne-hardening-b-loopback`. Les conteneurs et volumes des deux stacks ont été supprimés après les essais ; le réseau B a aussi été supprimé. Les images sont conservées en cache.
 
@@ -88,3 +88,11 @@ commit;
 ```
 
 Le propriétaire accepte explicitement que ce retour arrière ciblé ne remplace pas une sauvegarde complète. L'outil Supabase MCP disponible attribue une version de migration côté serveur : l'alignement avec le fichier local `20261116215223` doit être résolu avant toute application ; aucune réparation de l'historique n'est autorisée par cette recette.
+
+## Atomicité de la version exacte
+
+Le propriétaire a choisi de conserver la version locale `20261116215223`. Un test local avec le CLI 3.1.0 a reproduit les deux versions d'historique Production à l'aide de marqueurs temporaires déjà enregistrés ; une seule nouvelle migration était en attente. La première version du fichier contenait `BEGIN` et `COMMIT` : un échec volontaire lors de l'insertion de l'historique a laissé ses changements appliqués sans version enregistrée.
+
+La migration a été corrigée en retirant ces délimiteurs, pour laisser le CLI grouper le fichier et l'inscription de l'historique dans sa transaction. Dans les deux environnements isolés (contrat moderne et ancien), le même échec injecté laisse l'état initial intact : droits, fonctions, données et index. Une application normale par le CLI n'a exécuté que cette migration et a enregistré `20261116215223` ; les tests SQL transactionnels passent. Sur l'ancien contrat, `event_at`, le propriétaire et les droits effectifs ont été vérifiés et les données fictives conservées. Le rollback ciblé a aussi été vérifié sur l'état moderne. Il laisse volontairement l'entrée d'historique en place : toute réconciliation ultérieure doit faire l'objet d'une procédure distincte, sans réparation implicite.
+
+La version corrigée ne doit pas être exécutée dans un éditeur SQL sans transaction encadrant à la fois le fichier et l'enregistrement de version. Le retour arrière décrit ci-dessus reste limité aux objets concernés et ne remplace pas la sauvegarde complète à laquelle le propriétaire a explicitement renoncé.
