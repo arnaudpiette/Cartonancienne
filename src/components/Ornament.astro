@@ -7,17 +7,19 @@ interface Props {
   class?: string;
   size?: 'small' | 'medium' | 'large';
   loading?: 'eager' | 'lazy';
+  widths?: number[];
+  sizes?: string;
 }
 
-const { src, class: className, size = 'medium', loading = 'lazy' } = Astro.props;
+const { src, class: className, size = 'medium', loading = 'lazy', widths = [96, 144, 192, 288, 384], sizes = '(max-width: 760px) 28vw, 180px' } = Astro.props;
 ---
 <Image
   src={src}
   alt=""
   aria-hidden="true"
   class:list={['ornament', `ornament--${size}`, className]}
-  widths={[96, 144, 192, 288, 384]}
-  sizes="(max-width: 760px) 28vw, 180px"
+  widths={widths}
+  sizes={sizes}
   loading={loading}
   decoding="async"
 />
