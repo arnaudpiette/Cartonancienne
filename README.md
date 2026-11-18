@@ -24,7 +24,7 @@ Le build utilise `output: 'server'` et `@astrojs/vercel` dans `astro.config.mjs`
 - Resend : transport des notifications de réservation lorsque le mode serveur est explicitement `live`. Tout autre mode reste simulé.
 - One.com : DNS et messagerie du domaine. Le réglage `Reply-To` du site ne crée pas de boîte mail chez One.com.
 
-Les projets Supabase Production et Test sont distincts. Les variables locales et Vercel doivent viser l’environnement voulu, sans copier de clés dans le dépôt. Le Login utilise le nom d’utilisateur public `C@rtosev`, puis Supabase Auth côté serveur ; le rôle administrateur vient de `app_metadata.role`. Ne jamais inscrire de mot de passe dans le code ou la documentation.
+Supabase Production est l’unique projet utilisé par le site (`ujyftupbmveeztqqchje`). Les environnements Vercel Preview et Production restent séparés, mais leurs variables Supabase doivent viser ce même projet. Ne jamais copier de clé dans le dépôt ni utiliser une clé `service_role` dans l’application. Le Login utilise Supabase Auth côté serveur ; l’autorisation administrateur vient de `app_metadata.role`. Ne jamais inscrire de mot de passe dans le code ou la documentation. Voir [docs/supabase-environments.md](docs/supabase-environments.md) pour les règles d’exploitation.
 
 ## Migrations locales
 
@@ -41,8 +41,9 @@ Le dépôt contient, dans `supabase/migrations/` :
 9. `009_booking_request_idempotency.sql`
 10. `20261111222342_keep_legacy_booking_rpc_during_rollout.sql`
 11. `20261112000222_notification_email_event_timestamp.sql`
+12. `20261116215223_harden_booking_rpc_and_delivery.sql`
 
-La présence de ces fichiers ne prouve pas que l’historique distant est aligné. Réconcilier d’abord les objets et les versions réellement présents sur chaque projet Supabase. Ne pas rejouer les anciennes migrations en Production sur des objets existants. Les migrations de transition de réservation se coordonnent avec la version du serveur en service.
+La présence de ces fichiers ne prouve pas que l’historique distant est aligné. Vérifier en lecture seule les objets et versions réellement présents sur Supabase Production avant toute proposition de migration. Ne pas rejouer les anciennes migrations sur des objets existants ; aucune migration ou écriture de test ne doit être appliquée en Production sans autorisation explicite.
 
 ## Réservations et images
 

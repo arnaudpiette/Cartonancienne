@@ -6,6 +6,6 @@ export default defineConfig({
   site: process.env.PUBLIC_SITE_URL || 'http://localhost:4321',
   output: 'server',
   adapter: vercel(),
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !/\/(admin|login|api|oeuf-alchimique)(\/|$)/.test(page) })],
   image: { service: { entrypoint: 'astro/assets/services/sharp' } }
 });

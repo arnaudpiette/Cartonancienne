@@ -10,17 +10,28 @@ import { contactPageHref } from '../data/contact';
 import { ornaments } from '../data/ornaments';
 import frise from '../assets/originals/atelier-frise.jpeg';
 import ceramic from '../assets/originals/atelier-ceramique.jpeg';
+import tarotVisionboard from '../assets/editorial/ateliers/tarot-visionboard/02.webp';
+import surrealCollage from '../assets/editorial/ateliers/collage/01.webp';
 import { ateliers } from '../lib/content';
 const atelierGroups = ateliers.editorial.galleryGroups.map(({ slug, title }) => ({ title, images: photos.filter(([path]) => path.includes(`/ateliers/${slug}/`)).map(([, item]) => item.default) }));
 ---
 <BaseLayout>
-  <section class="offer-intro workshop-intro page ornamented-intro"><div><p class="eyebrow">{ateliers.intro.eyebrow}</p><h1>{ateliers.intro.title}</h1><p>{ateliers.intro.description}</p></div><Ornament src={ornaments.handStar} size="large" loading="eager" /></section>
+  <section class="offer-intro workshop-intro page ornamented-intro"><div><p class="eyebrow">{ateliers.intro.eyebrow}</p><h1>{ateliers.intro.title}</h1><p>{ateliers.intro.description}</p></div><Ornament src={ornaments.handStar} size="large" loading="eager" widths={[192, 288, 384, 512, 768]} sizes="(max-width: 306px) 156px, (max-width: 441px) 51vw, (max-width: 760px) 225px, (max-width: 823px) 210px, (max-width: 1530px) 25.5vw, 390px" /></section>
   <section class="workshop-grid section" aria-label={ateliers.workshopActions.ariaLabel}>
     <article><ArtworkImage src={frise} alt={ateliers.cards[0].imageAlt} /><p class="eyebrow">{ateliers.cards[0].eyebrow}</p><h2>{ateliers.cards[0].title}</h2><p>{ateliers.cards[0].description}</p></article>
     <article><ArtworkImage src={ceramic} alt={ateliers.cards[1].imageAlt} /><p class="eyebrow">{ateliers.cards[1].eyebrow}</p><h2>{ateliers.cards[1].title}</h2><p>{ateliers.cards[1].description}</p></article>
-    <article><p class="eyebrow">{ateliers.cards[2].eyebrow}</p><h2>{ateliers.cards[2].title}</h2><p>{ateliers.cards[2].description}</p></article>
-    <article><p class="eyebrow">{ateliers.cards[3].eyebrow}</p><h2>{ateliers.cards[3].title}</h2><p>{ateliers.cards[3].description}</p></article>
+    <article><ArtworkImage src={tarotVisionboard} alt={ateliers.cards[2].imageAlt ?? ateliers.cards[2].title} /><p class="eyebrow">{ateliers.cards[2].eyebrow}</p><h2>{ateliers.cards[2].title}</h2><p>{ateliers.cards[2].description}</p></article>
+    <article><ArtworkImage src={surrealCollage} alt={ateliers.cards[3].imageAlt ?? ateliers.cards[3].title} /><p class="eyebrow">{ateliers.cards[3].eyebrow}</p><h2>{ateliers.cards[3].title}</h2><p>{ateliers.cards[3].description}</p></article>
   </section>
-  <section class="workshop-actions section"><Ornament src={ornaments.workshopTools} class="section-side-ornament" size="medium" /><div><p class="eyebrow">{ateliers.workshopActions.dates.eyebrow}</p><h2>{ateliers.workshopActions.dates.title}</h2><p>{ateliers.workshopActions.dates.description}</p><a class="text-link arrow-link" href={contactPageHref(ateliers.workshopActions.dates.contactMotif)}>{ateliers.workshopActions.dates.link} <ArrowIcon /></a></div><div><p class="eyebrow">{ateliers.workshopActions.privatisation.eyebrow}</p><h2>{ateliers.workshopActions.privatisation.title}</h2><p>{ateliers.workshopActions.privatisation.description}</p><a class="text-link arrow-link" href={contactPageHref(ateliers.workshopActions.privatisation.contactMotif)}>{ateliers.workshopActions.privatisation.link} <ArrowIcon /></a></div></section>
-  <section class="section editorial-section"><p class="eyebrow">{ateliers.editorial.eyebrow}</p><h2>{ateliers.editorial.title}</h2>{ateliers.editorial.paragraphs.map(paragraph => <p>{paragraph}</p>)}{atelierGroups.map(group => <details class="editorial-details"><summary>{group.title}</summary><EditorialGallery images={group.images} label={group.title} /></details>)}<a class="text-link arrow-link" href={contactPageHref(ateliers.editorial.finalContactMotif)}>{ateliers.editorial.finalLink} <ArrowIcon /></a></section>
+  <section class="section editorial-section workshop-editorial"><p class="eyebrow">{ateliers.editorial.eyebrow}</p><h2>{ateliers.editorial.title}</h2>{ateliers.editorial.paragraphs.map(paragraph => <p>{paragraph}</p>)}{atelierGroups.map(group => <details class="editorial-details"><summary>{group.title}</summary><EditorialGallery images={group.images} label={group.title} /></details>)}<a class="text-link arrow-link" href={contactPageHref(ateliers.editorial.finalContactMotif)}>{ateliers.editorial.finalLink} <ArrowIcon /></a></section>
+  <section class="workshop-actions section" aria-label={ateliers.workshopActions.ariaLabel}>
+    <article class="workshop-action workshop-action--dates">
+      <Ornament src={ornaments.celestialWatch} class="workshop-action-ornament" size="large" widths={[192, 288, 384, 512, 768]} sizes="(max-width: 760px) 88vw, 46vw" />
+      <div class="workshop-action-copy"><p class="eyebrow">{ateliers.workshopActions.dates.eyebrow}</p><h2>{ateliers.workshopActions.dates.title}</h2><p>{ateliers.workshopActions.dates.description}</p><a class="text-link arrow-link" href={contactPageHref(ateliers.workshopActions.dates.contactMotif)}>{ateliers.workshopActions.dates.link} <ArrowIcon /></a></div>
+    </article>
+    <article class="workshop-action workshop-action--privatisation">
+      <div class="workshop-action-copy"><p class="eyebrow">{ateliers.workshopActions.privatisation.eyebrow}</p><h2>{ateliers.workshopActions.privatisation.title}</h2><p>{ateliers.workshopActions.privatisation.description}</p><a class="text-link arrow-link" href={contactPageHref(ateliers.workshopActions.privatisation.contactMotif)}>{ateliers.workshopActions.privatisation.link} <ArrowIcon /></a></div>
+      <Ornament src={ornaments.workshopTools} class="workshop-action-ornament" size="large" widths={[192, 288, 384, 512, 768]} sizes="(max-width: 760px) 88vw, 46vw" />
+    </article>
+  </section>
 </BaseLayout>

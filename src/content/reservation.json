@@ -34,7 +34,7 @@
       "lastNameLabel": "Nom",
       "emailLabel": "Adresse e-mail",
       "privacyBeforeLink": "Votre prénom, votre nom et votre adresse e-mail servent à gérer votre rendez-vous et ses notifications. Pour toute question sur vos informations,",
-      "privacyContactHref": "/contact",
+      "privacyContactHref": "/mentions-legales#donnees",
       "privacyLink": "contactez l’atelier"
     },
     "confirmation": {

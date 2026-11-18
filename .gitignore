@@ -17,3 +17,5 @@ src/assets/originals/illustration.jpg
 test-results/
 playwright-report/
 supabase/.temp/
+.vercel
+.env*

@@ -10,6 +10,10 @@
   "cardLink": "Voir la fiche",
   "editorialImageAltSeparator": " — image ",
   "detail": {
+    "contactLink": "Me parler de cette pièce",
+    "previousLabel": "Précédent",
+    "nextLabel": "Suivant",
+    "navLabel": "Autres œuvres",
     "backLink": "Retour à la galerie",
     "yearLabel": "Année",
     "creditLabel": "Crédit"

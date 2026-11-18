@@ -85,7 +85,7 @@ export interface ContactContent {
     instagramHref: string;
     reservationHref: string;
     reservationLink: string;
-    locationAlt: string;
+    photoAlt: string;
   };
   motives: Record<string, ContactMotive>;
 }
@@ -96,15 +96,13 @@ export interface NavigationContent {
   desktopAriaLabel: string;
   mobileAriaLabel: string;
   login: LinkContent;
+  cta: LinkContent;
   menu: { openLabel: string; closeLabel: string };
 }
 
 export interface FooterContent {
-  homeHref: string;
-  homeLabel: string;
-  copyright: string;
-  press: LinkContent;
-  contact: LinkContent;
+  homeHref: string; homeLabel: string; tagline: string; navLabel: string; copyright: string;
+  press: LinkContent; contact: LinkContent; instagram: LinkContent; legal: LinkContent; login: LinkContent;
 }
 
 export interface SeoContent {

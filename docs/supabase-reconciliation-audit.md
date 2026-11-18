@@ -1,5 +1,7 @@
 # Audit de réconciliation Supabase — La Cartonancienne
 
+> Mise à jour du 18 novembre 2026 : ce document est une photographie historique prise lorsque Production et Test étaient deux projets opérationnels. Le projet Test est retiré de la configuration courante ; seul Production (`ujyftupbmveeztqqchje`) doit être utilisé. Les comparaisons ci-dessous ne décrivent pas une configuration actuelle et doivent être revalidées en lecture seule avant toute décision distante.
+
 Observation en lecture seule du 16 novembre 2026. Aucun SQL de mutation, appel RPC applicatif, upload, connexion administrateur ou envoi de courriel n'a été effectué. Les preuves viennent des catalogues PostgreSQL des deux projets, de leurs historiques `supabase_migrations.schema_migrations`, des advisors Supabase et du commit local `4f428d61f6c39b31b1bebc05851fa6612ced4e3e`. Les catalogues prouvent l'état observé, pas la provenance historique exacte d'un objet. Le script associé est `supabase/preflight/production-readiness-readonly.sql`.
 
 ## Périmètre et état Git

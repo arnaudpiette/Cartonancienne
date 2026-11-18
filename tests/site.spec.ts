@@ -81,7 +81,7 @@ test('Homepage Atelier card and section follow the requested composition', async
   const ornamentWidths = await panels.locator('img').evaluateAll((images) => images.map((image) => getComputedStyle(image).width));
   expect(ornamentWidths).toEqual(['200px', '200px', '300px']);
   const ornamentHeights = await panels.locator('img').evaluateAll((images) => images.map((image) => getComputedStyle(image).height));
-  expect(ornamentHeights).toEqual(['200px', '200px', '300px']);
+  expect(ornamentHeights).toEqual(['200px', '200px', '200px']);
   const desktopPanelHeights = await panels.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().height));
   expect(desktopPanelHeights[0]).toBe(505);
   expect(desktopPanelHeights[1]).toBe(desktopPanelHeights[2]);
@@ -136,7 +136,7 @@ test('Homepage Atelier card and section follow the requested composition', async
   const mobileOrnamentWidths = await panels.locator('img').evaluateAll((images) => images.map((image) => getComputedStyle(image).width));
   expect(mobileOrnamentWidths).toEqual(['200px', '200px', '300px']);
   const mobileOrnamentHeights = await panels.locator('img').evaluateAll((images) => images.map((image) => getComputedStyle(image).height));
-  expect(mobileOrnamentHeights).toEqual(['200px', '200px', '300px']);
+  expect(mobileOrnamentHeights).toEqual(['200px', '200px', '200px']);
   const mobilePanelHeights = await panels.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().height));
   expect(mobilePanelHeights[0]).toBe(315);
   expect(mobilePanelHeights[1]).toBeGreaterThan(315);
@@ -154,6 +154,107 @@ test('Homepage Atelier card and section follow the requested composition', async
   expect(workshopCtaFits).toBe(true);
 });
 
+test('Workshop, press, ceramic and contact pages use their requested layouts', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/ateliers');
+  await expect(page.locator('.workshop-editorial + .workshop-actions')).toHaveCount(1);
+  const workshopImages = page.locator('.workshop-grid article img');
+  await expect(workshopImages).toHaveCount(4);
+  const desktopImageSizes = await workshopImages.evaluateAll((images) => images.map((image) => {
+    const { width, height } = image.getBoundingClientRect();
+    return { width, height };
+  }));
+  expect(desktopImageSizes.every(({ width, height }) => width > height)).toBe(true);
+  expect(desktopImageSizes.every((size) => size.width === desktopImageSizes[0].width && size.height === desktopImageSizes[0].height)).toBe(true);
+  await expect(workshopImages.nth(2)).toHaveAttribute('alt', 'Création de tarot et visionboard pendant un atelier');
+  await expect(workshopImages.nth(3)).toHaveAttribute('alt', 'Collage surréaliste créé pendant un atelier');
+  const workshopActions = page.locator('.workshop-action');
+  await expect(workshopActions).toHaveCount(2);
+  await expect(workshopActions.nth(0).locator('.workshop-action-ornament')).toHaveAttribute('src', /celestial-watch/);
+  await expect(workshopActions.nth(1).locator('.workshop-action-ornament')).toHaveAttribute('src', /workshop-tools/);
+  const ornamentScaleFactors = await workshopActions.locator('.workshop-action-ornament').evaluateAll((ornaments) => ornaments.map((ornament) => ornament.getBoundingClientRect().width / 260));
+  expect(ornamentScaleFactors.every((scale) => Math.abs(scale - 2.3) < 0.01)).toBe(true);
+  const desktopActionOrder = await workshopActions.evaluateAll((actions) => actions.map((action) => {
+    const ornament = action.querySelector('.workshop-action-ornament')!.getBoundingClientRect();
+    const copy = action.querySelector('.workshop-action-copy')!.getBoundingClientRect();
+    return { ornamentLeft: ornament.left, copyLeft: copy.left };
+  }));
+  expect(desktopActionOrder[0].ornamentLeft).toBeLessThan(desktopActionOrder[0].copyLeft);
+  expect(desktopActionOrder[1].copyLeft).toBeLessThan(desktopActionOrder[1].ornamentLeft);
+  await expect(workshopActions.nth(1).locator('.workshop-action-copy > p').nth(1)).toHaveCSS('text-align', 'justify');
+
+  await page.goto('/illustrations');
+  await expect(page.locator('.filters')).toHaveCount(0);
+  const editorialHeadings = page.locator('.cabinet-heading');
+  await expect(editorialHeadings).toHaveCount(2);
+  const headingMetrics = await editorialHeadings.evaluateAll((rows) => rows.map((row) => {
+    const bounds = row.getBoundingClientRect();
+    const label = row.querySelector('.eyebrow')!;
+    const style = getComputedStyle(label);
+    return { left: bounds.left, width: bounds.width, center: bounds.left + bounds.width / 2, font: style.font, letterSpacing: style.letterSpacing };
+  }));
+  expect(headingMetrics[0].center).toBeCloseTo(headingMetrics[1].center, 0);
+  expect(headingMetrics[0].width).toBeCloseTo(headingMetrics[1].width, 0);
+  expect(headingMetrics[0].font).toBe(headingMetrics[1].font);
+  expect(headingMetrics[0].letterSpacing).toBe(headingMetrics[1].letterSpacing);
+
+  await page.goto('/presse');
+  await expect(page.locator('.page-title-row .presse-title-ornament')).toBeVisible();
+  await expect(page.locator('.presse-title-ornament')).toHaveAttribute('src', /presse/i);
+
+  await page.goto('/ceramiques');
+  await expect(page.locator('.filters')).toHaveCount(0);
+  const ceramicFeature = page.locator('.ceramics-feature');
+  await expect(ceramicFeature.locator('video')).toBeVisible();
+  await expect(ceramicFeature.locator('.ceramics-feature-copy h2')).toHaveText('Terre, mer et mères divines');
+  const ceramicColumns = await ceramicFeature.evaluate((feature) => {
+    const video = feature.querySelector('video')!.getBoundingClientRect();
+    const copy = feature.querySelector('.ceramics-feature-copy')!.getBoundingClientRect();
+    return { videoLeft: video.left, copyLeft: copy.left, videoTop: video.top, copyTop: copy.top, videoRatio: video.width / video.height, collectionsMargin: Number.parseFloat(getComputedStyle(feature.parentElement!.querySelector('.ceramics-collections')!).marginTop) };
+  });
+  expect(ceramicColumns.videoLeft).toBeLessThan(ceramicColumns.copyLeft);
+  expect(Math.abs(ceramicColumns.videoTop - ceramicColumns.copyTop)).toBeLessThan(1);
+  expect(ceramicColumns.videoRatio).toBeCloseTo(9 / 16, 2);
+  expect(ceramicColumns.collectionsMargin).toBeGreaterThan(60);
+
+  await page.goto('/contact');
+  const contactDirect = page.locator('.contact-direct');
+  const contactColumns = await contactDirect.evaluate((section) => {
+    const photo = section.querySelector('.contact-direct-photo')!.getBoundingClientRect();
+    const copy = section.querySelector('.contact-direct-copy')!.getBoundingClientRect();
+    return { photoLeft: photo.left, copyLeft: copy.left, photoWidth: photo.width };
+  });
+  expect(contactColumns.photoLeft).toBeLessThan(contactColumns.copyLeft);
+  expect(contactColumns.photoWidth).toBeLessThanOrEqual(190);
+  await expect(contactDirect).toContainText('severinepiettepr@gmail.com');
+
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/ateliers');
+  const mobileActionOrder = await workshopActions.evaluateAll((actions) => actions.map((action) => {
+    const ornament = action.querySelector('.workshop-action-ornament')!.getBoundingClientRect();
+    const copy = action.querySelector('.workshop-action-copy')!.getBoundingClientRect();
+    return { ornamentTop: ornament.top, copyTop: copy.top };
+  }));
+  expect(mobileActionOrder[0].ornamentTop).toBeLessThan(mobileActionOrder[0].copyTop);
+  expect(mobileActionOrder[1].copyTop).toBeLessThan(mobileActionOrder[1].ornamentTop);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.goto('/ceramiques');
+  const mobileCeramicColumns = await page.locator('.ceramics-feature').evaluate((feature) => {
+    const video = feature.querySelector('video')!.getBoundingClientRect();
+    const copy = feature.querySelector('.ceramics-feature-copy')!.getBoundingClientRect();
+    return { videoTop: video.top, copyTop: copy.top };
+  });
+  expect(mobileCeramicColumns.videoTop).toBeLessThan(mobileCeramicColumns.copyTop);
+  await page.goto('/contact');
+  const mobileContactColumns = await contactDirect.evaluate((section) => {
+    const photo = section.querySelector('.contact-direct-photo')!.getBoundingClientRect();
+    const copy = section.querySelector('.contact-direct-copy')!.getBoundingClientRect();
+    return { photoLeft: photo.left, copyLeft: copy.left };
+  });
+  expect(mobileContactColumns.photoLeft).toBeLessThan(mobileContactColumns.copyLeft);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
 test('Arrow links use a consistent icon size and text spacing', async ({ page }) => {
   for (const path of ['/', '/ateliers', '/tarot', '/bonjour', '/presse', '/illustrations', '/ceramiques', '/contact', '/reservation', '/oeuvres/la-lune']) {
     await page.goto(path);
@@ -167,13 +268,64 @@ test('Arrow links use a consistent icon size and text spacing', async ({ page })
   }
 });
 
+test('Large page ornaments load image variants at least as wide as their rendered size', async ({ page }) => {
+  for (const width of [375, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ['/illustrations', '/ateliers', '/bonjour', '/contact']) {
+      await page.goto(path);
+      const ornaments = page.locator('.ornament');
+      for (let index = 0; index < await ornaments.count(); index++) {
+        const ornament = ornaments.nth(index);
+        await ornament.scrollIntoViewIfNeeded();
+        const { renderedWidth, sourceWidth, pixelRatio, source } = await ornament.evaluate(async (element) => {
+          if (!(element instanceof HTMLImageElement)) throw new Error('Expected an ornament image');
+          element.loading = 'eager';
+          await element.decode();
+          const source = new URL(element.currentSrc || element.src, document.baseURI);
+          return {
+            renderedWidth: element.getBoundingClientRect().width,
+            sourceWidth: Number(source.searchParams.get('w')),
+            pixelRatio: window.devicePixelRatio,
+            source: source.href,
+          };
+        });
+        expect(sourceWidth, `${path} at ${width}px: ${source}`).toBeGreaterThanOrEqual(Math.ceil(renderedWidth * pixelRatio));
+      }
+    }
+  }
+});
+
+test('Anonymous visitors are denied access to admin pages and mutation APIs', async ({ page }) => {
+  for (const path of ['/admin', '/admin/agenda', '/admin/oeuvre', '/admin/ornements']) {
+    await page.goto(path);
+    await expect(page).toHaveURL(/\/login$/);
+  }
+  for (const path of ['/api/artworks', '/api/admin/agenda', '/api/admin/appointments', '/api/admin/notifications']) {
+    const response = await page.request.post(path);
+    expect(response.status(), path).toBe(403);
+  }
+});
+
+test('Hero animation respects reduced-motion preferences', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  await expect(page.locator('.hero-egg')).toHaveCSS('animation-name', 'egg-float');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('.hero-egg')).toHaveCSS('animation-name', 'none');
+});
+
 for (const width of [375, 1440]) {
   test(`Public pages render without errors or horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
-    for (const path of ['/', '/illustrations', '/ceramiques', '/oeuvres/la-lune', '/oeuvres/oeuf-phenix', '/oeuvres/assiette-au-crabe', '/oeuvres/carnet-moleskine', '/oeuvres/assiette-au-poulpe', '/oeuvres/cristaux', '/tarot', '/ateliers', '/reservation', '/bonjour', '/contact', '/login']) {
+    for (const path of ['/', '/illustrations', '/ceramiques', '/oeuvres/la-lune', '/oeuvres/oeuf-phenix', '/oeuvres/assiette-au-crabe', '/oeuvres/carnet-moleskine', '/oeuvres/assiette-au-poulpe', '/oeuvres/cristaux', '/tarot', '/ateliers', '/reservation', '/bonjour', '/contact', '/mentions-legales', '/login']) {
       const response = await page.goto(path); expect(response?.status(), path).toBe(200);
       await expect(page.locator('main h1'), path).toHaveCount(1);
+      await expect(page.locator('.logo-signature'), path).toHaveText('Séverine Piette');
+      const signatureFontSize = await page.locator('.logo-signature').evaluate((signature) => Number.parseFloat(getComputedStyle(signature).fontSize));
+      expect(signatureFontSize, path).toBeGreaterThan(11);
+      await expect(page.locator('.desktop-nav a').first(), path).toHaveAttribute('href', '/bonjour');
+      await expect(page.locator('#mobile-menu nav a').first(), path).toHaveAttribute('href', '/bonjour');
       const { scrollWidth, overflowingElements } = await page.evaluate(() => ({
         scrollWidth: document.documentElement.scrollWidth,
         overflowingElements: [...document.querySelectorAll('body *')]
@@ -193,3 +345,21 @@ for (const width of [375, 1440]) {
     expect(errors).toEqual([]);
   });
 }
+
+test('Images load on all public pages', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  for (const path of ['/', '/illustrations', '/ceramiques', '/oeuvres/la-lune', '/oeuvres/oeuf-phenix', '/oeuvres/assiette-au-crabe', '/oeuvres/carnet-moleskine', '/oeuvres/assiette-au-poulpe', '/oeuvres/cristaux', '/tarot', '/ateliers', '/reservation', '/bonjour', '/contact', '/mentions-legales', '/login']) {
+    await page.goto(path);
+    const images = page.locator('main img');
+    for (let index = 0; index < await images.count(); index++) {
+      const { naturalWidth, currentSrc } = await images.nth(index).evaluate(async (element) => {
+        if (!(element instanceof HTMLImageElement)) throw new Error('Expected a page image');
+        element.loading = 'eager';
+        await element.decode();
+        return { naturalWidth: element.naturalWidth, currentSrc: element.currentSrc };
+      });
+      expect(naturalWidth, `${path} image ${index}: ${currentSrc}`).toBeGreaterThan(0);
+    }
+  }
+});

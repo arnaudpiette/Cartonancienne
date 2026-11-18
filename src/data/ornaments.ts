@@ -20,6 +20,7 @@ import sealedEnvelope from '../assets/ornaments/sealed-envelope.png';
 import severineProfile from '../assets/ornaments/severine-profile.png';
 import shellCoral from '../assets/ornaments/shell-coral.png';
 import workshopTools from '../assets/ornaments/workshop-tools.png';
+import presse from '../assets/ornaments/presse.png';
 import pierre from '../assets/ornaments/pierre.png';
 import papier from '../assets/ornaments/papier.png';
 import ciseaux from '../assets/ornaments/ciseaux.png';
@@ -47,6 +48,7 @@ export const ornaments = {
   severineProfile,
   shellCoral,
   workshopTools,
+  presse,
   pierre,
   papier,
   ciseaux,

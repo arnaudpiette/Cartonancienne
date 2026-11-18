@@ -1,6 +1,7 @@
 {
   "brandSignature": "Séverine Piette",
   "hero": {
+    "scrollLabel": "Entrer dans le cabinet",
     "titleLines": ["Tout commence", "par un signe."],
     "eggAlt": "Œuf de phénix ivoire décoré par Séverine Piette"
 
@@ -15,7 +16,7 @@
     "illustrationsHref": "/illustrations",
     "illustrationsLink": "Toutes les illustrations",
     "ceramicsHref": "/ceramiques",
-    "ceramicsLink": "Toute les céramiques"
+    "ceramicsLink": "Toutes les céramiques"
   },
   "splitLinks": {
     "tarot": {

@@ -5,7 +5,7 @@ import { bonjour } from '../lib/content';
 ---
 <BaseLayout>
   <section class="page about-page" aria-labelledby="about-title">
-    <div class="about-intro ornamented-about-intro"><div><p class="eyebrow">{bonjour.intro.eyebrow}</p><h1 id="about-title">{bonjour.intro.title}</h1><p class="about-lead">{bonjour.intro.lead}</p><p class="about-practices">{bonjour.intro.practices}</p></div><Ornament src={ornaments.severineProfile} size="large" loading="eager" /></div>
+    <div class="about-intro ornamented-about-intro"><div><p class="eyebrow">{bonjour.intro.eyebrow}</p><h1 id="about-title">{bonjour.intro.title}</h1><p class="about-lead">{bonjour.intro.lead}</p><p class="about-practices">{bonjour.intro.practices}</p></div><Ornament src={ornaments.severineProfile} size="large" loading="eager" widths={[192, 288, 384, 512, 768]} sizes="(max-width: 306px) 156px, (max-width: 441px) 51vw, (max-width: 760px) 225px, (max-width: 1024px) 210px, (max-width: 1609px) 20.5vw, 330px" /></div>
     <div class="about-composition">
       <figure class="about-portrait"><ArtworkImage src={portrait} alt={bonjour.portrait.alt} loading="eager" /><figcaption>{bonjour.portrait.caption}</figcaption></figure>
       <div class="about-copy">{bonjour.sections.map(section => <><h2>{section.title}</h2>{section.paragraphs.map(paragraph => <p>{paragraph}</p>)}</>)}<p>{bonjour.closing}</p><figure><ArtworkImage src={atelier} alt={bonjour.atelier.alt} /><figcaption>{bonjour.atelier.caption}</figcaption></figure>

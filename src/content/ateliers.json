@@ -20,12 +20,14 @@
     {
       "eyebrow": "Tarot & visionboard",
       "title": "Tarot & Visionboard",
-      "description": "Un moment ludique et inspirant pour explorer la créativité : le tarot de Marseille rencontre le collage intuitif."
+      "description": "Un moment ludique et inspirant pour explorer la créativité : le tarot de Marseille rencontre le collage intuitif.",
+      "imageAlt": "Création de tarot et visionboard pendant un atelier"
     },
     {
       "eyebrow": "Illustration",
       "title": "Collages surréalistes",
-      "description": "Une initiation au collage et au dessin au trait bicolore, pour créer une composition poétique et originale."
+      "description": "Une initiation au collage et au dessin au trait bicolore, pour créer une composition poétique et originale.",
+      "imageAlt": "Collage surréaliste créé pendant un atelier"
     }
   ],
   "workshopActions": {

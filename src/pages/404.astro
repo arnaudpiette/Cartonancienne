@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import { ornaments } from '../data/ornaments';
+Astro.response.status = 404;
+---
+<BaseLayout title="Page introuvable">
+  <section class="page">
+    <div class="page-title-row">
+      <div>
+        <p class="eyebrow">Erreur 404</p>
+        <h1>Cette porte reste close.</h1>
+        <p>La page que vous cherchez s’est égarée entre deux cartes.</p>
+        <a class="text-link arrow-link" href="/">Retourner à l’atelier <ArrowIcon /></a>
+      </div>
+      <Ornament src={ornaments.moonKey} size="large" loading="eager" />
+    </div>
+  </section>
+</BaseLayout>

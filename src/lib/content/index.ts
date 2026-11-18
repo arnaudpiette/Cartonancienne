@@ -40,7 +40,10 @@ export const footer = footerData satisfies FooterContent;
 export const galerie = galerieData satisfies GalleryContent;
 export const illustrations = illustrationsData satisfies IllustrationsContent;
 export const login = loginData satisfies LoginContent;
-export const navigation = navigationData satisfies NavigationContent;
+export const navigation = {
+  ...navigationData,
+  cta: navigationData.login.cta,
+} satisfies NavigationContent;
 export const oeuvres = oeuvresData satisfies ArtworksContent;
 export const presse = presseData satisfies PresseContent;
 export const reservation = reservationData satisfies ReservationContent;
