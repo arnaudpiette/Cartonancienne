@@ -284,10 +284,6 @@ main:focus { outline: none; }
 .cabinet-heading span:last-child { background: linear-gradient(270deg, transparent, var(--gold)); }
 .cabinet-heading .eyebrow::before, .cabinet-heading .eyebrow::after { content: ''; display: inline-block; width: 6px; height: 6px; border: 1px solid var(--gold); transform: rotate(45deg); margin: 0 .9em; vertical-align: .12em; }
 
-/* Hero : œuf qui flotte */
-@keyframes egg-float { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-50%, calc(-50% - 8px)); } }
-@media (prefers-reduced-motion: no-preference) { .hero-egg { animation: egg-float 9s ease-in-out infinite; } }
-
 /* CTA final : ciel de nuit */
 .contact-cta { background: linear-gradient(180deg, var(--ink) 0%, var(--ink-deep) 100%); border-top: 1px solid var(--gold); }
 

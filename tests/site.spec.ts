@@ -306,12 +306,14 @@ test('Anonymous visitors are denied access to admin pages and mutation APIs', as
   }
 });
 
-test('Hero animation respects reduced-motion preferences', async ({ page }) => {
+test('Hero particle animation respects reduced-motion preferences', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
-  await expect(page.locator('.hero-egg')).toHaveCSS('animation-name', 'egg-float');
+  const egg = page.locator('.hero-egg');
+  await expect(egg).toHaveCSS('opacity', '0', { timeout: 10000 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(page.locator('.hero-egg')).toHaveCSS('animation-name', 'none');
+  await page.reload();
+  await expect(egg).toHaveCSS('opacity', '1');
 });
 
 for (const width of [375, 1440]) {

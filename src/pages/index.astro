@@ -1,4 +1,5 @@
 ---
+import HeroEggAnimation from '../components/HeroEggAnimation.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArtworkImage from '../components/ArtworkImage.astro';
 import ArtworkGallery from '../components/ArtworkGallery.astro';
@@ -20,6 +21,7 @@ const cabinetArtworks = [
   <section class="hero" aria-labelledby="hero-title">
     <h1 id="hero-title">{accueil.hero.titleLines.map(line => <span>{line}</span>)}</h1>
     <ArtworkImage src={egg} alt={accueil.hero.eggAlt} widths={[480,640,900,1086]} sizes="(max-width: 700px) 70vw, 38vw" loading="eager" class="hero-egg" />
+    <HeroEggAnimation />
     <a class="scroll-cue" href="#cabinet-title">{accueil.hero.scrollLabel} <svg class="arrow-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4v16M5 13l7 7 7-7" /></svg></a>
   </section>
   <div class="cabinet-ornament" aria-hidden="true"><Ornament src={ornaments.curiosityBellJar} size="large" /></div><ArtworkGallery artworks={cabinetArtworks} title={accueil.gallery.title} />
