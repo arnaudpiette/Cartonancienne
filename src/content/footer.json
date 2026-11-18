@@ -1,0 +1,13 @@
+{
+  "homeHref": "/",
+  "homeLabel": "La Cartonancienne",
+  "copyright": "© Séverine Piette",
+  "press": {
+    "href": "/presse",
+    "label": "On parle de moi"
+  },
+  "contact": {
+    "href": "/contact",
+    "label": "Écrire à l’atelier"
+  }
+}

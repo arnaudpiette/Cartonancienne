@@ -1,11 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 import ArtworkGallery from '../components/ArtworkGallery.astro';
+import EditorialGallery from '../components/EditorialGallery.astro';
+import type { ImageMetadata } from 'astro';
 import Ornament from '../components/Ornament.astro';
 import { artworks } from '../data/artworks';
 import { ornaments } from '../data/ornaments';
 import { publishedPortfolio } from '../lib/portfolio';
+import { illustrations as illustrationsContent } from '../lib/content';
 const remoteArtworks = await publishedPortfolio(Astro.cookies, Astro.request, 'illustration');
 const galleryArtworks = [...remoteArtworks, ...artworks.filter((local) => local.category === 'illustration' && !remoteArtworks.some((remote) => remote.slug === local.slug))];
+const portfolio = Object.entries(import.meta.glob<{ default: ImageMetadata }>('../assets/editorial/illustrations/portfolio/*.webp', { eager: true })).sort(([a], [b]) => a.localeCompare(b)).map(([, module]) => module.default);
 ---
-<BaseLayout title="Illustrations"><section class="page gallery-page ornamented-intro"><div><p class="eyebrow">Portfolio</p><h1>Illustrations</h1><p>Des images au trait, à la lisière des signes et des histoires.</p></div><div class="ornament-pair"><Ornament src={ornaments.lilyPen} size="large" loading="eager" /></div></section><ArtworkGallery artworks={galleryArtworks} title="Les illustrations" /></BaseLayout>
+<BaseLayout><section class="page gallery-page ornamented-intro"><div><p class="eyebrow">{illustrationsContent.intro.eyebrow}</p><h1>{illustrationsContent.intro.title}</h1><p>{illustrationsContent.intro.description}</p></div><div class="ornament-pair"><Ornament src={ornaments.lilyPen} size="large" loading="eager" /></div></section><ArtworkGallery artworks={galleryArtworks} title={illustrationsContent.galleryTitle} /><section id="portfolio" class="section editorial-section"><p class="eyebrow">{illustrationsContent.portfolio.eyebrow}</p><h2>{illustrationsContent.portfolio.title}</h2><EditorialGallery images={portfolio} label={illustrationsContent.portfolio.galleryLabel} /><p><a class="text-link arrow-link" href={illustrationsContent.portfolio.downloadHref}>{illustrationsContent.portfolio.downloadLink} <ArrowIcon /></a></p><p><a class="text-link arrow-link" href={illustrationsContent.portfolio.projectHref}>{illustrationsContent.portfolio.projectLink} <ArrowIcon /></a></p></section></BaseLayout>

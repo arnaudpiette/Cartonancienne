@@ -1,0 +1,90 @@
+{
+  "intro": {
+    "eyebrow": "Almanach des rendez-vous",
+    "title": "Réserver un tirage"
+  },
+  "noscript": {
+    "beforeLink": "Activez JavaScript pour parcourir les étapes de réservation, ou",
+    "contactHref": "/contact",
+    "link": "contactez l’atelier",
+    "afterLink": "."
+  },
+  "progress": {
+    "ariaLabel": "Étapes de réservation",
+    "labels": ["Votre tirage", "Date et horaire", "Vos coordonnées", "Vérification"]
+  },
+  "steps": {
+    "service": {
+      "eyebrow": "Étape 1 sur 4",
+      "title": "Choisir son tirage",
+      "legend": "Choisissez votre séance",
+      "servicePrefix": "Tirage",
+      "selectedLabel": " · Sélectionné"
+    },
+    "date": {
+      "eyebrow": "Étape 2 sur 4",
+      "title": "Choisir une date et un horaire",
+      "dateLabel": "Votre date · heures de Paris",
+      "slotsLegend": "Choisir un horaire · Europe/Paris"
+    },
+    "details": {
+      "eyebrow": "Étape 3 sur 4",
+      "title": "Vos coordonnées",
+      "firstNameLabel": "Prénom",
+      "lastNameLabel": "Nom",
+      "emailLabel": "Adresse e-mail",
+      "privacyBeforeLink": "Votre prénom, votre nom et votre adresse e-mail servent à gérer votre rendez-vous et ses notifications. Pour toute question sur vos informations,",
+      "privacyContactHref": "/contact",
+      "privacyLink": "contactez l’atelier"
+    },
+    "confirmation": {
+      "eyebrow": "Étape 4 sur 4",
+      "title": "Vérifier et confirmer",
+      "submit": "Confirmer ma réservation"
+    }
+  },
+  "buttons": {
+    "continue": "Continuer",
+    "back": "Retour",
+    "retry": "Réessayer"
+  },
+  "paymentOnSite": "Paiement sur place le jour de votre séance. Aucun paiement en ligne n’est demandé.",
+  "confirmation": {
+    "eyebrow": "Votre rendez-vous est enregistré",
+    "title": "Votre réservation est confirmée.",
+    "questionHref": "/contact",
+    "questionLink": "Une question sur votre rendez-vous ? Contactez l’atelier"
+  },
+  "messages": {
+    "invalidDate": "Choisissez une date valide à partir d’aujourd’hui.",
+    "searchingSlots": "Recherche des disponibilités…",
+    "availabilityUnavailable": "Les disponibilités sont momentanément indisponibles.",
+    "availableSlot": "horaire disponible.",
+    "availableSlots": "horaires disponibles.",
+    "noAvailability": "Aucun créneau disponible pour cette date et ce tirage. Vous pouvez choisir une autre date.",
+    "availabilityLoadFailed": "Impossible de charger les disponibilités.",
+    "fieldErrors": {
+      "firstName": "Renseignez votre prénom.",
+      "lastName": "Renseignez votre nom.",
+      "email": "Renseignez une adresse e-mail valide."
+    },
+    "detailsError": "Vérifiez les coordonnées indiquées ci-dessous.",
+    "submitPending": "Enregistrement de votre réservation…",
+    "submitError": "L’enregistrement n’a pas pu être vérifié. Réessayez sans changer vos choix.",
+    "serverResponseError": "La réponse du serveur n’a pas pu être vérifiée. Réessayez sans changer vos choix : la même demande sera reconnue pour éviter un doublon.",
+    "mailStatus": {
+      "sent": "Votre récapitulatif a été transmis au service d’envoi d’e-mails.",
+      "simulation": "Votre réservation est enregistrée. Aucun e-mail réel n’a été envoyé dans cet environnement.",
+      "pending": "Votre réservation est enregistrée. Le récapitulatif par e-mail est en attente ; ne réservez pas à nouveau."
+    },
+    "serviceDurationUnit": "minutes"
+  },
+  "summaryLabels": {
+    "service": "Tirage",
+    "duration": "Durée",
+    "appointment": "Rendez-vous",
+    "price": "Tarif",
+    "contact": "Coordonnées",
+    "timezone": "Europe/Paris"
+  }
+}

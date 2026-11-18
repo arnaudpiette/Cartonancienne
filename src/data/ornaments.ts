@@ -1,4 +1,6 @@
 import astrologyWheel from '../assets/ornaments/astrology-wheel.png';
+import tarotStone from '../assets/ornaments/cartonancienne-pierre-tarot.webp';
+import paperIllustrations from '../assets/ornaments/cartonancienne-papier-illustrations.webp';
 import celestialCrab from '../assets/ornaments/celestial-crab.png';
 import celestialMoth from '../assets/ornaments/celestial-moth.png';
 import celestialWatch from '../assets/ornaments/celestial-watch.png';
@@ -18,9 +20,14 @@ import sealedEnvelope from '../assets/ornaments/sealed-envelope.png';
 import severineProfile from '../assets/ornaments/severine-profile.png';
 import shellCoral from '../assets/ornaments/shell-coral.png';
 import workshopTools from '../assets/ornaments/workshop-tools.png';
+import pierre from '../assets/ornaments/pierre.png';
+import papier from '../assets/ornaments/papier.png';
+import ciseaux from '../assets/ornaments/ciseaux.png';
 
 export const ornaments = {
   astrologyWheel,
+  tarotStone,
+  paperIllustrations,
   celestialCrab,
   celestialMoth,
   celestialWatch,
@@ -40,9 +47,15 @@ export const ornaments = {
   severineProfile,
   shellCoral,
   workshopTools,
+  pierre,
+  papier,
+  ciseaux,
 } as const;
 
 export const ornamentCatalog = [
+  { slug: 'pierre', label: 'Pierre', section: 'Services', asset: pierre },
+  { slug: 'papier', label: 'Papier', section: 'Services', asset: papier },
+  { slug: 'ciseaux', label: 'Ciseaux', section: 'Services', asset: ciseaux },
   { slug: 'crescent-moon', label: 'Croissant de lune', section: 'Tarot', asset: crescentMoon },
   { slug: 'mystic-eye', label: 'Œil mystique', section: 'Tarot', asset: mysticEye },
   { slug: 'hand-star', label: 'Main étoilée', section: 'Ateliers', asset: handStar },

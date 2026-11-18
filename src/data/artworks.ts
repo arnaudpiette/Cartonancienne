@@ -1,6 +1,11 @@
+import type { ImageMetadata } from 'astro';
 import egg from '../assets/originals/oeuf-phenix-ivoire-ombre-douce.png';
 import crabPlate from '../assets/originals/assiette-au-crabe.png';
 import laLune from '../assets/originals/la-lune.jpg';
+import carnet from '../assets/editorial/illustrations/01.webp';
+import poulpeSgraffite from '../assets/editorial/ceramiques/sgraffite/10.webp';
+import cristaux from '../assets/editorial/tarot/03.webp';
+import { oeuvres as artworkContent } from '../lib/content';
 
 export type ArtworkCategory = 'illustration' | 'ceramique';
 
@@ -17,37 +22,22 @@ export type Artwork = {
   year?: number | null;
 };
 
-export const artworks: Artwork[] = [
-  {
-    slug: 'la-lune',
-    title: 'La Lune',
-    category: 'illustration',
-    categoryLabel: 'Illustration',
-    image: laLune,
-    alt: 'Illustration au trait noir d’une femme tenant un médaillon, titrée La Lune.',
-    credit: 'Crédit à confirmer',
-    description: 'Illustration au trait noir portant le titre « La Lune ».',
-  },
-  {
-    slug: 'oeuf-phenix',
-    title: 'Œuf Phénix',
-    category: 'ceramique',
-    categoryLabel: 'Céramique peinte',
-    image: egg,
-    alt: 'Œuf en céramique ivoire, décoré d’un phénix bleu.',
-    credit: 'Séverine Piette',
-    description: 'Œuf en céramique ivoire peint d’un phénix bleu.',
-  },
-  {
-    slug: 'assiette-au-crabe',
-    title: 'Assiette au crabe',
-    category: 'ceramique',
-    categoryLabel: 'Céramique peinte',
-    image: crabPlate,
-    alt: 'Assiette en céramique blanche décorée d’un crabe bleu.',
-    credit: 'Séverine Piette',
-    description: 'Assiette en céramique décorée d’un crabe bleu.',
-  },
-];
+const artworkImages = new Map<string, ImageMetadata>([
+  ['la-lune', laLune],
+  ['oeuf-phenix', egg],
+  ['assiette-au-crabe', crabPlate],
+  ['carnet-moleskine', carnet],
+  ['assiette-au-poulpe', poulpeSgraffite],
+  ['cristaux', cristaux],
+]);
+
+export const artworks: Artwork[] = artworkContent.artworks.map((artwork) => {
+  const image = artworkImages.get(artwork.slug);
+  if (!image) throw new Error(`Missing local image for artwork: ${artwork.slug}`);
+  if (artwork.category !== 'illustration' && artwork.category !== 'ceramique') {
+    throw new Error(`Unknown artwork category: ${artwork.category}`);
+  }
+  return { ...artwork, category: artwork.category, image };
+});
 
 export const pendingIllustrations = ['Gloria — visuel original et fiche à fournir'];

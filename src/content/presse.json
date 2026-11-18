@@ -1,0 +1,34 @@
+{
+  "eyebrow": "On parle de moi",
+  "title": "Presse",
+  "description": "Une sélection de rencontres et de parutions autour de l’atelier.",
+  "linksLabel": "Articles et reportages",
+  "links": [
+    {
+      "href": "https://auvio.rtbf.be/emission/journal-televise-13h-4",
+      "label": "RTBF · Journal télévisé",
+      "external": true
+    },
+    {
+      "href": "https://www.lalibre.be/lifestyle/2025/06/01/deviner-ce-qui-se-passe-dans-linvisible-des-individus-est-une-realite-qui-fait-partie-du-tarot-POJURGNLZRA2ZLL6LYGM5KVDMU/",
+      "label": "La Libre Belgique",
+      "external": true
+    },
+    {
+      "href": "https://www.instagram.com/reel/DU0ol-GCJIL/",
+      "label": "Panorama 20",
+      "external": true
+    },
+    {
+      "href": "/documents/weekend-le-vif-52-53.pdf",
+      "label": "Weekend Le Vif · 52–53",
+      "external": false
+    },
+    {
+      "href": "/documents/weekend-le-vif-54-55.pdf",
+      "label": "Weekend Le Vif · 54–55",
+      "external": false
+    }
+  ],
+  "galleryLabel": "Parution de presse"
+}

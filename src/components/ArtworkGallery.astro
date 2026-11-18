@@ -1,13 +1,14 @@
 ---
 import ArtworkCard from './ArtworkCard.astro';
 import type { Artwork } from '../data/artworks';
-const { artworks, title = 'Cabinet de curiosités', intro } = Astro.props as { artworks: Artwork[]; title?: string; intro?: string };
+import { galerie } from '../lib/content';
+const { artworks, title, intro } = Astro.props as { artworks: Artwork[]; title: string; intro?: string };
 ---
 <section class="cabinet section" aria-labelledby="cabinet-title">
-  <div class="cabinet-heading"><span aria-hidden="true"></span><p class="eyebrow">Œuvres choisies</p><span aria-hidden="true"></span></div>
-  <div class="section-title"><div><h2 id="cabinet-title">{title}</h2>{intro && <p class="gallery-intro">{intro}</p>}</div><div class="filters" aria-label="Filtrer les œuvres"><button type="button" class="active" data-filter="all" aria-pressed="true">Tout</button><button type="button" data-filter="illustration" aria-pressed="false">Illustrations</button><button type="button" data-filter="ceramique" aria-pressed="false">Céramiques</button></div></div>
+  <div class="cabinet-heading"><span aria-hidden="true"></span><p class="eyebrow">{galerie.eyebrow}</p><span aria-hidden="true"></span></div>
+  <div class="section-title"><div><h2 id="cabinet-title">{title}</h2>{intro && <p class="gallery-intro">{intro}</p>}</div><div class="filters" aria-label={galerie.filters.ariaLabel}><button type="button" class="active" data-filter="all" aria-pressed="true">{galerie.filters.all}</button><button type="button" data-filter="illustration" aria-pressed="false">{galerie.filters.illustrations}</button><button type="button" data-filter="ceramique" aria-pressed="false">{galerie.filters.ceramics}</button></div></div>
   <div class="work-grid">{artworks.map((artwork) => <ArtworkCard artwork={artwork} />)}</div>
-  <p class="gallery-empty" role="status" aria-live="polite" hidden>Aucune œuvre ne correspond à cette sélection.</p>
+  <p class="gallery-empty" role="status" aria-live="polite" hidden>{galerie.emptyState}</p>
 </section>
 <script>
   document.querySelectorAll<HTMLElement>('.cabinet').forEach((gallery) => {

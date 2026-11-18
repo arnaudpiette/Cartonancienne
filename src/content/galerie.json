@@ -1,0 +1,17 @@
+{
+  "eyebrow": "Œuvres choisies",
+  "filters": {
+    "ariaLabel": "Filtrer les œuvres",
+    "all": "Tout",
+    "illustrations": "Illustrations",
+    "ceramics": "Céramiques"
+  },
+  "emptyState": "Aucune œuvre ne correspond à cette sélection.",
+  "cardLink": "Voir la fiche",
+  "editorialImageAltSeparator": " — image ",
+  "detail": {
+    "backLink": "Retour à la galerie",
+    "yearLabel": "Année",
+    "creditLabel": "Crédit"
+  }
+}

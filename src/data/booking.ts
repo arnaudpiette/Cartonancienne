@@ -1,6 +1,8 @@
+import { reservation, tarot } from '../lib/content';
+
 export const bookingServices = {
-  'tarot-solo': { title: 'Tarot Solo', price: 50, duration: 60, description: 'Une question à poser, un domaine à explorer avec le tarot de Marseille.' },
-  'roue-astrologique': { title: 'Tarot Roue', price: 70, duration: 90, description: 'Une lecture à 12 cartes, pour accompagner le mouvement de votre année et éclairer les secteurs de vie.' },
+  'tarot-solo': tarot.bookingServices.solo,
+  'roue-astrologique': tarot.bookingServices.astrologicalWheel,
 } as const;
 
 export type BookingServiceSlug = keyof typeof bookingServices;
@@ -9,7 +11,7 @@ export function isBookingService(value: string | null | undefined): value is Boo
   return !!value && Object.hasOwn(bookingServices, value);
 }
 
-export const paymentOnSite = 'Paiement sur place le jour de votre séance. Aucun paiement en ligne n’est demandé.';
+export const paymentOnSite = reservation.paymentOnSite;
 
 export function parisDay(value = new Date()) {
   return value.toLocaleDateString('en-CA', { timeZone: 'Europe/Paris' });

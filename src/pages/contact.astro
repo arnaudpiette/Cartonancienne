@@ -2,21 +2,21 @@
 import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Ornament from '../components/Ornament.astro';
-import { contactEmail, contactHref, contactMotif } from '../data/contact';
+import ArtworkImage from '../components/ArtworkImage.astro';
+import location from '../assets/editorial/contact/01.webp';
+import { contactEmail, contactHref, contactMotif, contactPageHref } from '../data/contact';
 import { ornaments } from '../data/ornaments';
+import { contact as contactContent } from '../lib/content';
 const requested = Astro.url.searchParams.get('motif');
-const knownMotifs = ['tarot-solo', 'roue-astrologique', 'tarot-evenementiel', 'bon-tarot', 'ateliers', 'privatisation'];
-const selected = requested === 'oeuvre' ? { label: 'Une œuvre ou une commande', href: `mailto:${contactEmail}?subject=${encodeURIComponent('Demande — œuvre ou commande')}&body=${encodeURIComponent('Bonjour Séverine,\n\nJe souhaite vous parler d’une œuvre ou d’une commande.\n\nMerci,')}` } : requested && knownMotifs.includes(requested) ? { label: contactMotif(requested).label, href: contactHref(requested) } : null;
+const selected = requested && Object.hasOwn(contactContent.motives, requested) ? { label: contactMotif(requested).label, href: contactHref(requested) } : null;
 ---
-<BaseLayout title="Contact">
+<BaseLayout>
   <section class="page contact-page" aria-labelledby="contact-title">
-    <div class="contact-intro ornamented-intro"><div><p class="eyebrow">L’atelier vous répond</p><h1 id="contact-title">Contact</h1><p>Pour une commande, une œuvre, un atelier ou une séance.</p></div><Ornament src={ornaments.sealedEnvelope} size="large" loading="eager" /></div>
-    {selected && <section class="contact-selection" aria-labelledby="contact-selection-title"><p class="eyebrow">Votre demande</p><h2 id="contact-selection-title">{selected.label}</h2><p>L’objet et le début de votre message sont préparés dans votre messagerie.</p><a class="contact-action" href={selected.href}>Ouvrir votre messagerie <ArrowIcon /></a><a class="contact-return" href="/contact#demandes">Voir toutes les demandes <span aria-hidden="true">↓</span></a></section>}
-    <section class="contact-choices" id="demandes" aria-labelledby="contact-choices-title"><div class="contact-choices-heading"><p class="eyebrow">Écrire à l’atelier</p><h2 id="contact-choices-title">Comment puis-je vous aider&nbsp;?</h2></div><div class="contact-list">
-      <article><span class="contact-number" aria-hidden="true">01</span><div><h3>Une œuvre ou une commande</h3><p>Une idée, un objet, une histoire à faire naître ?</p><a href="/contact?motif=oeuvre">Parler d’une œuvre ou d’une commande <ArrowIcon /></a></div></article>
-      <article><span class="contact-number" aria-hidden="true">02</span><div><h3>Un tirage de tarot</h3><p>Une question à poser, un domaine à explorer avec le tarot de Marseille.</p><a href="/contact?motif=tarot-solo">Parler d’un tirage solo <ArrowIcon /></a><a href="/contact?motif=roue-astrologique">Parler de la roue astrologique <ArrowIcon /></a><a href="/contact?motif=tarot-evenementiel">Parler d’un événement <ArrowIcon /></a><a href="/contact?motif=bon-tarot">En savoir plus sur Le Bon Tarot <ArrowIcon /></a></div></article>
-      <article><span class="contact-number" aria-hidden="true">03</span><div><h3>Un atelier ou une privatisation</h3><p>Pour un groupe, une équipe ou une occasion particulière, parlons du format adapté.</p><a href="/contact?motif=ateliers">Demander les prochaines dates <ArrowIcon /></a><a href="/contact?motif=privatisation">Demander une privatisation <ArrowIcon /></a></div></article>
+    <div class="contact-intro ornamented-intro"><div><p class="eyebrow">{contactContent.intro.eyebrow}</p><h1 id="contact-title">{contactContent.intro.title}</h1><p>{contactContent.intro.description}</p></div><Ornament src={ornaments.sealedEnvelope} size="large" loading="eager" /></div>
+    {selected && <section class="contact-selection" aria-labelledby="contact-selection-title"><p class="eyebrow">{contactContent.selection.eyebrow}</p><h2 id="contact-selection-title">{selected.label}</h2><p>{contactContent.selection.description}</p><a class="contact-action arrow-link" href={selected.href}>{contactContent.selection.openLink} <ArrowIcon /></a><a class="contact-return arrow-link" href={contactContent.selection.returnHref}>{contactContent.selection.returnLink} <ArrowIcon /></a></section>}
+    <section class="contact-choices" id="demandes" aria-labelledby="contact-choices-title"><div class="contact-choices-heading"><p class="eyebrow">{contactContent.choices.eyebrow}</p><h2 id="contact-choices-title">{contactContent.choices.title}</h2></div><div class="contact-list">
+      {contactContent.choices.items.map(item => <article><span class="contact-number" aria-hidden="true">{item.number}</span><div><h3>{item.title}</h3><p>{item.description}</p>{item.links.map(link => <a class="arrow-link" href={contactPageHref(link.motif)}>{link.label} <ArrowIcon /></a>)}</div></article>)}
     </div></section>
-    <div class="contact-direct"><p class="eyebrow">Écrire directement</p><a href={`mailto:${contactEmail}`} aria-label={`Écrire directement à ${contactEmail}`}>{contactEmail} <ArrowIcon /></a></div>
+    <div class="contact-direct"><p class="eyebrow">{contactContent.direct.name}</p><p><a class="arrow-link" href={`mailto:${contactEmail}`}>{contactEmail} <ArrowIcon /></a></p><p><a href={contactContent.direct.phoneHref}>{contactContent.direct.phone}</a></p><p><a class="arrow-link" href={contactContent.direct.instagramHref} target="_blank" rel="noreferrer">{contactContent.direct.instagramHandle} <ArrowIcon /></a></p><p><a class="arrow-link" href={contactContent.direct.reservationHref}>{contactContent.direct.reservationLink} <ArrowIcon /></a></p><ArtworkImage src={location} alt={contactContent.direct.locationAlt} /></div>
   </section>
 </BaseLayout>

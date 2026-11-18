@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EditorialGallery from '../components/EditorialGallery.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import type { ImageMetadata } from 'astro';
+import { presse } from '../lib/content';
+const images = Object.entries(import.meta.glob<{ default: ImageMetadata }>('../assets/editorial/presse/*.webp', { eager: true })).sort(([a], [b]) => a.localeCompare(b)).map(([, item]) => item.default);
+---
+<BaseLayout><section class="page editorial-section"><p class="eyebrow">{presse.eyebrow}</p><h1>{presse.title}</h1><p>{presse.description}</p><nav class="editorial-links" aria-label={presse.linksLabel}>{presse.links.map(link => <a class="arrow-link" href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noreferrer' : undefined}>{link.label} <ArrowIcon /></a>)}</nav><EditorialGallery images={images} label={presse.galleryLabel} /></section></BaseLayout>
