@@ -1,0 +1,69 @@
+{
+  "intro": {
+    "eyebrow": "Retour aux sources",
+    "title": "Le Bon Tarot",
+    "imageAlt": "Le Bon Tarot de Séverine Piette",
+    "paragraphs": [
+      "Mes accompagnements s’inscrivent dans un courant humaniste et s'appuie sur des outils créatifs de développement personnel et spirituel : tarot de Marseille, numérologie, vision board et coaching. Soit autant de grilles de lecture d’élargissement de conscience et de connaissance de soi qui reposent sur l’illustration, les jeux de miroirs et de résonances.", "Mon approche est dite «biodynamique» car elle s’ancre dans une lecture cyclique de l’évolution, dans le respect du vivant et de notre cycle personnel. J’utilise le tarot pour mettre l’imagination et l’intuition au service d’une créativité au quotidien. En rdv individuel ou en groupe."
+    ],
+    "linkHref": "#tarot-offers",
+    "link": "Découvrir les tirages"
+  },
+  "offersHeading": {
+    "eyebrow": "Quatre services",
+    "title": "Choisir une porte"
+  },
+  "pricingDurationUnit": "min",
+  "bookingServices": {
+    "solo": {
+      "title": "Tarot Solo",
+      "description": "Une question à poser, un domaine à explorer avec le tarot de Marseille.",
+      "price": 50,
+      "duration": 60
+    },
+    "astrologicalWheel": {
+      "title": "Tarot Roue",
+      "description": "Une lecture à 12 cartes, pour accompagner le mouvement de votre année et éclairer les secteurs de vie.",
+      "price": 70,
+      "duration": 90
+    }
+  },
+  "offers": {
+    "solo": {
+      "number": "01",
+      "status": "Réservation en ligne",
+      "title": "Rendez-vous solo",
+      "link": "Réserver un tirage"
+    },
+    "astrologicalWheel": {
+      "number": "02",
+      "status": "Réservation en ligne",
+      "title": "La roue astrologique",
+      "link": "Réserver un tirage"
+    },
+    "event": {
+      "number": "03",
+      "title": "Tarot événementiel",
+      "description": "Une proposition à imaginer ensemble, à la demande.",
+      "link": "Parler de votre événement",
+      "contactMotif": "tarot-evenementiel"
+    },
+    "gift": {
+      "number": "04",
+      "title": "Le Bon Tarot / bon cadeau",
+      "description": "Un bon cadeau à offrir : 50 €, 60 € ou 70 €.",
+      "link": "En savoir plus",
+      "contactMotif": "bon-tarot"
+    }
+  },
+  "editorial": {
+    "eyebrow": "Retour aux sources",
+    "title": "Le langage des images",
+    "paragraphs": [
+      "Le tarot de Marseille est un jeu illustré datant du XVe siècle, composé de 22 arcanes majeurs et de 56 arcanes mineurs. Les arcanes majeurs retracent les grands thèmes de l’expérience humaine et les étapes d’un chemin de vie.",
+      "Longtemps connu pour son usage divinatoire, il est aussi un outil de connaissance de soi. Ses symboles et archétypes résonnent avec l’imagination et le vécu, développent l’intuition et ouvrent de nouvelles pistes d’action.",
+      "Le tarot que je pratique questionne les croyances et les pensées limitantes. Il fait appel à notre créativité au quotidien, à notre capacité à imaginer et à inventer des solutions."
+    ],
+    "galleryLabel": "L’univers du tarot de Séverine"
+  }
+}

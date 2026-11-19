@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { galerie } from '../lib/content';
+interface Props { images: ImageMetadata[]; label: string; }
+const { images, label } = Astro.props;
+---
+<div class="editorial-gallery" aria-label={label}>
+  {images.map((image, index) => <Image src={image} alt={`${label}${galerie.editorialImageAltSeparator}${index + 1}`} loading="lazy" />)}
+</div>

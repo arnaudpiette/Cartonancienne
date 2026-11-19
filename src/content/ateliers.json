@@ -1,0 +1,67 @@
+{
+  "intro": {
+    "eyebrow": "Faire ensemble",
+    "title": "Ateliers",
+    "description": "Le pouvoir de l’image, la visualisation créatrice et la magie du papier."
+  },
+  "cards": [
+    {
+      "eyebrow": "Illustration",
+      "title": "Personnalise ta frise",
+      "description": "Initiation à l’illustration décorative au trait : créer une frise au trait pour encadrer une recette, une page de journal ou une journée de voyage.",
+      "imageAlt": "Atelier d’illustration autour d’une frise décorative"
+    },
+    {
+      "eyebrow": "Céramique",
+      "title": "Décor sur céramique",
+      "description": "Un format documenté dans les sources de l’atelier, autour de la décoration sur céramique.",
+      "imageAlt": "Atelier de décoration sur céramique"
+    },
+    {
+      "eyebrow": "Tarot & visionboard",
+      "title": "Tarot & Visionboard",
+      "description": "Un moment ludique et inspirant pour explorer la créativité : le tarot de Marseille rencontre le collage intuitif.",
+      "imageAlt": "Création de tarot et visionboard pendant un atelier"
+    },
+    {
+      "eyebrow": "Illustration",
+      "title": "Collages surréalistes",
+      "description": "Une initiation au collage et au dessin au trait bicolore, pour créer une composition poétique et originale.",
+      "imageAlt": "Collage surréaliste créé pendant un atelier"
+    }
+  ],
+  "workshopActions": {
+    "ariaLabel": "Formats d’atelier",
+    "dates": {
+      "eyebrow": "Ateliers programmés",
+      "title": "Les prochaines dates",
+      "description": "Les prochaines dates seront annoncées bientôt.",
+      "link": "Demander les prochaines dates",
+      "contactMotif": "ateliers"
+    },
+    "privatisation": {
+      "eyebrow": "Privatisation",
+      "title": "Créer un atelier sur mesure",
+      "description": "Pour un groupe, une équipe ou une occasion particulière, parlons du format adapté.",
+      "link": "Demander une privatisation",
+      "contactMotif": "privatisation"
+    }
+  },
+  "editorial": {
+    "eyebrow": "À l’atelier",
+    "title": "Créer ensemble",
+    "paragraphs": [
+      "Le tarot de Marseille et le vision board ouvrent un espace à l’intuition et à la visualisation créatrice. Le dessin, le collage et la céramique invitent à explorer la composition et les images.",
+      "Les ateliers de décoration sur céramique durent de 2 à 3 heures, à Forest ou chez vous avec frais de déplacement. Un devis est établi à la demande.",
+      "Privatisations pour particuliers et entreprises : team building, anniversaires, enterrements de vie de jeune fille, groupes d’amis ou de collègues."
+    ],
+    "galleryGroups": [
+      { "slug": "tarot-visionboard", "title": "Tarot & Visionboard" },
+      { "slug": "frise", "title": "Personnalise ta frise" },
+      { "slug": "collage", "title": "Collages surréalistes" },
+      { "slug": "ceramique", "title": "Décor & céramique" }
+    ],
+    "finalLink": "Demander les prochaines dates",
+    "finalContactMotif": "ateliers"
+  }
+}

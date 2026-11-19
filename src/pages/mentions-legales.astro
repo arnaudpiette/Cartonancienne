@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { contactEmail } from '../data/contact';
+---
+<BaseLayout title="Mentions légales">
+  <section class="page legal-page">
+    <p class="eyebrow">Informations</p>
+    <h1>Mentions légales</h1>
+    <h2>Éditrice du site</h2>
+    <p>Séverine Piette — [adresse] — [numéro d’entreprise / TVA] — {contactEmail}</p>
+    <h2>Hébergement</h2>
+    <p>[hébergeur et adresse : Vercel Inc., etc.]</p>
+    <h2 id="donnees">Données personnelles</h2>
+    <p>Les informations saisies lors d’une réservation (nom, prénom, e-mail, créneau) servent uniquement à gérer le rendez-vous. Durée de conservation : [à préciser]. Pour exercer vos droits d’accès, de rectification ou de suppression : {contactEmail}.</p>
+  </section>
+</BaseLayout>

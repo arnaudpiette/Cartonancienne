@@ -1,0 +1,57 @@
+{
+  "intro": {
+    "eyebrow": "Bonjour",
+    "title": "Qui suis-je ?",
+    "lead": "Dessinatrice et tarologue bruxelloise, j’aime nager entre deux eaux, ayant compris très tôt le pouvoir des vases communicants.",
+    "practices": "Illustrations · Céramiques · Tarot · Ateliers"
+  },
+  "portrait": {
+    "alt": "Portrait de Séverine Piette",
+    "caption": "Portrait : Charles Delcourt."
+  },
+  "sections": [
+    {
+      "title": "Mon parcours",
+      "paragraphs": [
+        "Attachée de presse dans une ancienne vie, je passe aujourd’hui de l’autre côté de la presse pour tourner la manivelle de ma carrière d’illustratrice. Presse, papier, ciseaux ponctuent mon parcours.",
+        "Illustratrice pour la presse, j’ai réalisé des commandes pour des maisons de luxe, des identités visuelles, des emballages, des tatouages et des cartes. En 2025, j’ai illustré un recueil de chansons de Marie Warnant et la couverture de son album Panorama 20.",
+        "Depuis 2019, j’ai exploré la gravure et découvert la terre. De ces dimensions nouvelles sont nées des collections en céramique gravées et illustrées, réalisées à la main en grès ou en porcelaine."
+      ]
+    },
+    {
+      "title": "Créativité & illustration",
+      "paragraphs": [
+        "Formée au tarot psychologique et au coaching évolutif, j’ouvre avec La Cartonancienne un espace qui rassemble accompagnements individuels, ateliers créatifs, illustrations et artisanat à la commande."
+      ]
+    },
+    {
+      "title": "Des ponts entre les mondes",
+      "paragraphs": [
+        "Mon univers créatif est animé de cartes et de magie, symbolique et poétique. Je cultive cette ouverture sur un monde sensible et puise l’inspiration dans la poésie du quotidien."
+      ]
+    },
+    {
+      "title": "Yi King",
+      "paragraphs": [
+        "Passionnée par la logique des cycles, je suis depuis septembre 2024 une formation en Yi King avec Diego Gavelli de l’association Guang Dao. Ce livre chinois des mutations présente 64 situations de vie, composées de traits yin et yang, et constitue un outil de conseil complémentaire au tarot de Marseille."
+      ]
+    }
+  ],
+  "closing": "La relation est mon école, l’image mon expression, la créativité mon guide.",
+  "atelier": {
+    "alt": "Dans l’atelier de Séverine Piette",
+    "caption": "Photographie : Olivia Garcia Comorera."
+  },
+  "links": {
+    "ariaLabel": "Découvrir l’univers de Séverine",
+    "eyebrow": "Explorer l’atelier",
+    "items": [
+      { "href": "/illustrations", "label": "Découvrir les illustrations" },
+      { "href": "/ceramiques", "label": "Découvrir les céramiques" },
+      { "href": "/tarot", "label": "Explorer le tarot" },
+      { "href": "/ateliers", "label": "Découvrir les ateliers" },
+      { "href": "/presse", "label": "On parle de moi" },
+      { "href": "/contact", "label": "Écrire à l’atelier" }
+    ]
+  }
+}

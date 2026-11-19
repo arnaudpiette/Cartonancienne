@@ -1,0 +1,17 @@
+{
+  "siteName": "La Cartonancienne",
+  "defaultTitle": "La Cartonancienne",
+  "defaultDescription": "Les signes, les histoires et les objets de Séverine Piette.",
+  "pageTitles": {
+    "/": "La Cartonancienne",
+    "/bonjour": "Bonjour",
+    "/tarot": "Tarot",
+    "/ateliers": "Ateliers",
+    "/contact": "Contact",
+    "/illustrations": "Illustrations",
+    "/ceramiques": "Céramiques",
+    "/presse": "Presse",
+    "/reservation": "Réserver un tirage",
+    "/login": "Login"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "intro": {
+    "eyebrow": "Portfolio",
+    "title": "Illustrations",
+    "description": "Dessinatrice et illustratrice depuis plus de dix ans, je nourris un imaginaire entre deux mondes, poétique et symbolique. Je travaille le trait noir et blanc, la gravure et le collage, avec des touches de couleur."
+  },
+  "galleryTitle": "Derniers projets",
+  "portfolio": {
+    "eyebrow": "Portfolio papier",
+    "title": "Les planches",
+    "galleryLabel": "Planche du portfolio d’illustration",
+    "downloadHref": "/documents/portfolio-illustration.pdf",
+    "downloadLink": "Télécharger le portfolio PDF",
+    "projectHref": "/contact?motif=oeuvre",
+    "projectLink": "Parler d’un projet d’illustration"
+  }
+}

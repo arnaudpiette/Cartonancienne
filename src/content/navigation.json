@@ -1,0 +1,28 @@
+{
+  "brand": {
+    "homeHref": "/",
+    "leading": "La Carton",
+    "emphasis": "ancienne",
+    "homeLabel": "La Cartonancienne, accueil"
+  },
+  "links": [
+    { "href": "/bonjour", "label": "Bonjour" },
+    { "href": "/illustrations", "label": "Illustrations" },
+    { "href": "/ceramiques", "label": "Céramiques" },
+    { "href": "/tarot", "label": "Tarot" },
+    { "href": "/ateliers", "label": "Ateliers" },
+    { "href": "/presse", "label": "Presse" },
+    { "href": "/contact", "label": "Contact" }
+  ],
+  "desktopAriaLabel": "Navigation principale",
+  "mobileAriaLabel": "Navigation mobile",
+  "login": {
+    "cta": { "href": "/reservation", "label": "Réserver un tirage" },
+    "href": "/login",
+    "label": "Login"
+  },
+  "menu": {
+    "openLabel": "Ouvrir le menu",
+    "closeLabel": "Fermer le menu"
+  }
+}

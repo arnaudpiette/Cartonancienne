@@ -1,0 +1,96 @@
+{
+  "email": "severinepiettepr@gmail.com",
+  "intro": {
+    "eyebrow": "L’atelier vous répond",
+    "title": "Contact",
+    "description": "Pour une commande, une œuvre, un atelier ou une séance."
+  },
+  "selection": {
+    "eyebrow": "Votre demande",
+    "description": "L’objet et le début de votre message sont préparés dans votre messagerie.",
+    "openLink": "Ouvrir votre messagerie",
+    "returnHref": "/contact#demandes",
+    "returnLink": "Voir toutes les demandes"
+  },
+  "choices": {
+    "eyebrow": "Écrire à l’atelier",
+    "title": "Comment puis-je vous aider ?",
+    "items": [
+      {
+        "number": "01",
+        "title": "Une œuvre ou une commande",
+        "description": "Une idée, un objet, une histoire à faire naître ?",
+        "links": [
+          { "motif": "oeuvre", "label": "Parler d’une œuvre ou d’une commande" }
+        ]
+      },
+      {
+        "number": "02",
+        "title": "Un tirage de tarot",
+        "description": "Une question à poser, un domaine à explorer avec le tarot de Marseille.",
+        "links": [
+          { "motif": "tarot-solo", "label": "Parler d’un tirage solo" },
+          { "motif": "roue-astrologique", "label": "Parler de la roue astrologique" },
+          { "motif": "tarot-evenementiel", "label": "Parler d’un événement" },
+          { "motif": "bon-tarot", "label": "En savoir plus sur Le Bon Tarot" }
+        ]
+      },
+      {
+        "number": "03",
+        "title": "Un atelier ou une privatisation",
+        "description": "Pour un groupe, une équipe ou une occasion particulière, parlons du format adapté.",
+        "links": [
+          { "motif": "ateliers", "label": "Demander les prochaines dates" },
+          { "motif": "privatisation", "label": "Demander une privatisation" }
+        ]
+      }
+    ]
+  },
+  "direct": {
+    "name": "Séverine Piette",
+    "phone": "+32 475 67 21 58",
+    "phoneHref": "tel:+32475672158",
+    "instagramHandle": "@severinepiette",
+    "instagramHref": "https://www.instagram.com/severinepiette/",
+    "reservationHref": "/reservation",
+    "reservationLink": "Réserver un tirage",
+    "photoAlt": "Illustration d’une sucette rose et violette"
+  },
+  "motives": {
+    "oeuvre": {
+      "label": "Une œuvre ou une commande",
+      "subject": "Demande — œuvre ou commande",
+      "body": "Bonjour Séverine,\n\nJe souhaite vous parler d’une œuvre ou d’une commande.\n\nMerci,"
+    },
+    "tarot-solo": {
+      "label": "Rendez-vous solo",
+      "subject": "Demande — rendez-vous tarot solo",
+      "body": "Bonjour Séverine,\n\nJe souhaite demander un rendez-vous solo avec le tarot de Marseille.\n\nMerci,"
+    },
+    "roue-astrologique": {
+      "label": "Roue astrologique",
+      "subject": "Demande — roue astrologique",
+      "body": "Bonjour Séverine,\n\nJe souhaite demander une lecture de la roue astrologique.\n\nMerci,"
+    },
+    "tarot-evenementiel": {
+      "label": "Tarot événementiel",
+      "subject": "Demande — tarot événementiel",
+      "body": "Bonjour Séverine,\n\nJe souhaite vous parler d’une demande de tarot événementiel.\n\nMerci,"
+    },
+    "bon-tarot": {
+      "label": "Le Bon Tarot",
+      "subject": "Demande — Le Bon Tarot",
+      "body": "Bonjour Séverine,\n\nJe souhaite en savoir plus sur Le Bon Tarot.\n\nMerci,"
+    },
+    "ateliers": {
+      "label": "Prochaines dates d’atelier",
+      "subject": "Demande — prochaines dates d’atelier",
+      "body": "Bonjour Séverine,\n\nJe souhaite recevoir les prochaines dates d’atelier.\n\nMerci,"
+    },
+    "privatisation": {
+      "label": "Privatisation d’atelier",
+      "subject": "Demande — privatisation d’atelier",
+      "body": "Bonjour Séverine,\n\nJe souhaite vous parler d’une privatisation d’atelier.\n\nMerci,"
+    }
+  }
+}

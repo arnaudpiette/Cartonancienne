@@ -1,0 +1,34 @@
+{
+  "intro": {
+    "eyebrow": "Collection",
+    "title": "Terre & Mer.es",
+    "description": "Mes collections en terre illustrées sont inspirées par la mer et les mères divines.Des archétypes du féminin, mythiques et mythologiques, des symboles universels et personnels, des amulettes magiques et protectrices."
+  },
+  "galleryTitle": "Derniers projets",
+  "editorial": {
+    "title": "Terre, mer et mères divines",
+    "paragraphs": [
+      "Je travail la terre principalement à la plaque, au modelage et à l’engobe, pour créer de jolis supports à mes illustrations. J’y grave comme dans le cuir de la peau, à la façon d’un tatouage. Cette esthétique m’inspire le motif, le geste et la couleur. Je privilégie les techniques de décoration appelées sgraffite et mishima, qui se répondent et se complètent à la façon du Yin et du Yang. Je dessine aussi au crayon à oxyde pour retrouver la sensation et le trait vaporeux, doux et poétique du crayon fusain que j’affectionne. Je travaille le grès et la porcelaine. Mes créations sont entièrement réalisées à la main et sont uniques. Je ne pratique pas (encore) le transfert d’image —sauf à la commande, ce qui permettrait de travailler en série un motif identique à prix réduit.",
+      "Délais de réalisation : 1 mois environ"
+    ],
+    "videoSrc": "/media/terre-et-mer-atelier.mp4",
+    "videoFallback": "Votre navigateur ne prend pas en charge la vidéo.",
+    "commissionHref": "/contact?motif=oeuvre",
+    "commissionLink": "Parler d’une commande",
+    "collectionsTitle": "Mes collections",
+    "collections": [
+      {
+        "slug": "oeufs",
+        "title": "Œufs décoratifs magiques",
+        "description": "Spiritualiser la matière et concrétiser ses rêves : déposez une intention dans l’Œuf alchimique et laissez le Phénix couver votre projet. La durée de gestation vous appartient, de 40 jours à 9 mois."
+      },
+      { "slug": "pieces-uniques", "title": "Pièces uniques" },
+      { "slug": "sgraffite", "title": "Sgraffite" },
+      { "slug": "mishima", "title": "Mishima" },
+      { "slug": "oracle", "title": "Sous-verres oracle" },
+      { "slug": "coquetiers", "title": "Coquetiers" },
+      { "slug": "porte-savon", "title": "Porte-savons baleine" },
+      { "slug": "commandes", "title": "Commandes et personnalisations" }
+    ]
+  }
+}

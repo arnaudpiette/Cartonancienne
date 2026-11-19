@@ -1,0 +1,58 @@
+{
+  "artworks": [
+    {
+      "slug": "la-lune",
+      "title": "La Lune",
+      "category": "illustration",
+      "categoryLabel": "Illustration",
+      "alt": "Illustration au trait noir d’une femme tenant un médaillon, titrée La Lune.",
+      "credit": "Crédit à confirmer",
+      "description": "Illustration au trait noir portant le titre « La Lune »."
+    },
+    {
+      "slug": "oeuf-phenix",
+      "title": "Œuf Phénix",
+      "category": "ceramique",
+      "categoryLabel": "Céramique peinte",
+      "alt": "Œuf en céramique ivoire, décoré d’un phénix bleu.",
+      "credit": "Séverine Piette",
+      "description": "Œuf en céramique ivoire peint d’un phénix bleu."
+    },
+    {
+      "slug": "assiette-au-crabe",
+      "title": "Assiette au crabe",
+      "category": "ceramique",
+      "categoryLabel": "Céramique peinte",
+      "alt": "Assiette en céramique blanche décorée d’un crabe bleu.",
+      "credit": "Séverine Piette",
+      "description": "Assiette en céramique décorée d’un crabe bleu."
+    },
+    {
+      "slug": "carnet-moleskine",
+      "title": "Carnet Moleskine",
+      "category": "illustration",
+      "categoryLabel": "Illustration",
+      "alt": "Dessin au crayon d’un carnet ouvert avec un ruban marque-page.",
+      "credit": "Séverine Piette",
+      "description": "Illustration au crayon d’un carnet ouvert."
+    },
+    {
+      "slug": "assiette-au-poulpe",
+      "title": "Assiette au poulpe",
+      "category": "ceramique",
+      "categoryLabel": "Céramique sgraffite",
+      "alt": "Assiette en céramique sombre décorée d’un poulpe blanc en sgraffite.",
+      "credit": "Séverine Piette",
+      "description": "Assiette en céramique sombre décorée d’un poulpe en sgraffite."
+    },
+    {
+      "slug": "cristaux",
+      "title": "Cristaux",
+      "category": "illustration",
+      "categoryLabel": "Illustration",
+      "alt": "Dessin au crayon en noir et blanc d’un amas de cristaux.",
+      "credit": "Séverine Piette",
+      "description": "Dessin au crayon d’un amas de cristaux."
+    }
+  ]
+}

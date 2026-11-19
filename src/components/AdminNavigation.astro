@@ -1,0 +1,29 @@
+---
+const { active = 'home' } = Astro.props;
+---
+<nav class="admin-nav" aria-label="Navigation administrateur">
+  <a href="/admin" data-admin-home aria-current={active === 'home' ? 'page' : undefined}>Accueil admin</a>
+  <a href="/admin#oeuvres" data-admin-works>Mes œuvres</a>
+  <a href="/admin/oeuvre" aria-current={active === 'artwork' ? 'page' : undefined}>Créer une fiche</a>
+  <a href="/admin/agenda" aria-current={active === 'agenda' ? 'page' : undefined}>Mon agenda</a>
+  <a href="/">Voir le site</a>
+  <form method="post" action="/api/logout"><button type="submit">Se déconnecter</button></form>
+</nav>
+<script>
+  function updateAdminNavigation() {
+    const onHome = window.location.pathname.replace(/\/$/, '') === '/admin';
+    const onWorks = onHome && window.location.hash === '#oeuvres';
+    const home = document.querySelector<HTMLAnchorElement>('[data-admin-home]');
+    const works = document.querySelector<HTMLAnchorElement>('[data-admin-works]');
+    if (home && onHome) {
+      if (onWorks) home.removeAttribute('aria-current');
+      else home.setAttribute('aria-current', 'page');
+    }
+    if (works) {
+      if (onWorks) works.setAttribute('aria-current', 'location');
+      else works.removeAttribute('aria-current');
+    }
+  }
+  window.addEventListener('hashchange', updateAdminNavigation);
+  updateAdminNavigation();
+</script>

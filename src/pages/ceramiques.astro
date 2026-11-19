@@ -1,11 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 import ArtworkGallery from '../components/ArtworkGallery.astro';
+import EditorialGallery from '../components/EditorialGallery.astro';
+import type { ImageMetadata } from 'astro';
 import Ornament from '../components/Ornament.astro';
 import { artworks } from '../data/artworks';
 import { ornaments } from '../data/ornaments';
 import { publishedPortfolio } from '../lib/portfolio';
+import { ceramiques } from '../lib/content';
 const remoteArtworks = await publishedPortfolio(Astro.cookies, Astro.request, 'ceramique');
 const galleryArtworks = [...remoteArtworks, ...artworks.filter((local) => local.category === 'ceramique' && !remoteArtworks.some((remote) => remote.slug === local.slug))];
+const editorial = Object.entries(import.meta.glob<{ default: ImageMetadata }>('../assets/editorial/ceramiques/**/*.webp', { eager: true })).sort(([a], [b]) => a.localeCompare(b));
+const collections = ceramiques.editorial.collections.map(({ slug, title, description }) => ({ title, description, images: editorial.filter(([path]) => path.includes(`/ceramiques/${slug}/`)).map(([, module]) => module.default) }));
 ---
-<BaseLayout title="Céramiques"><section class="page gallery-page ornamented-intro"><div><p class="eyebrow">Collection</p><h1>Terre &amp; Mer.es</h1><p>Objets singuliers, céramiques peintes et matières marines façonnés à l’atelier.</p></div><div class="ornament-trio"><Ornament src={ornaments.marineAmphora} size="large" loading="eager" /><Ornament src={ornaments.shellCoral} size="small" loading="eager" /><Ornament src={ornaments.celestialCrab} size="small" loading="eager" /></div></section><ArtworkGallery artworks={galleryArtworks} title="La collection" /></BaseLayout>
+<BaseLayout><section class="page gallery-page ornamented-intro"><div><p class="eyebrow">{ceramiques.intro.eyebrow}</p><h1>{ceramiques.intro.title}</h1><p>{ceramiques.intro.description}</p></div><div class="ornament-trio"><Ornament src={ornaments.marineAmphora} size="large" loading="eager" /><Ornament src={ornaments.shellCoral} size="small" loading="eager" /><Ornament src={ornaments.celestialCrab} size="small" loading="eager" /></div></section><ArtworkGallery artworks={galleryArtworks} title={ceramiques.galleryTitle} filters={false} /><section class="section editorial-section ceramics-editorial">
+  <div class="ceramics-feature">
+    <video controls preload="metadata" playsinline src={ceramiques.editorial.videoSrc}>{ceramiques.editorial.videoFallback}</video>
+    <div class="ceramics-feature-copy"><h2>{ceramiques.editorial.title}</h2>{ceramiques.editorial.paragraphs.map(paragraph => <p>{paragraph}</p>)}<a class="text-link arrow-link" href={ceramiques.editorial.commissionHref}>{ceramiques.editorial.commissionLink} <ArrowIcon /></a></div>
+  </div>
+  <div class="ceramics-collections"><h2>{ceramiques.editorial.collectionsTitle}</h2>{collections.map(group => <details class="editorial-details"><summary>{group.title}</summary>{group.description && <p>{group.description}</p>}<EditorialGallery images={group.images} label={group.title} /></details>)}</div>
+</section></BaseLayout>

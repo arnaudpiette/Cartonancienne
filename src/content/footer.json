@@ -1,0 +1,12 @@
+{
+  "homeHref": "/",
+  "homeLabel": "La Cartonancienne",
+  "tagline": "Les signes, les histoires et les objets de Séverine Piette.",
+  "navLabel": "Pied de page",
+  "copyright": "© Séverine Piette",
+  "press": { "href": "/presse", "label": "On parle de moi" },
+  "contact": { "href": "/contact", "label": "Écrire à l’atelier" },
+  "instagram": { "href": "https://www.instagram.com/severinepiette/", "label": "Instagram" },
+  "legal": { "href": "/mentions-legales", "label": "Mentions légales" },
+  "login": { "href": "/login", "label": "Espace atelier" }
+}

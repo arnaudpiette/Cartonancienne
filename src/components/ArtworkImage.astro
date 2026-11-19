@@ -2,4 +2,16 @@
 import { Image } from 'astro:assets';
 const { src, alt, widths = [480, 800, 1200], sizes = '(max-width: 700px) 100vw, 50vw', loading = 'lazy', class: className = '' } = Astro.props;
 ---
-{typeof src === 'string' ? <img src={src} alt={alt} loading={loading} class={className} /> : <Image src={src} alt={alt} widths={widths} sizes={sizes} format="webp" loading={loading} class={className} />}
+{typeof src === 'string' ? (
+	<img
+		src={`${src}&w=800`}
+		srcset={`${src}&w=480 480w, ${src}&w=800 800w, ${src}&w=1200 1200w`}
+		sizes={sizes}
+		alt={alt}
+		loading={loading}
+		decoding="async"
+		class={className}
+	/>
+) : (
+	<Image src={src} alt={alt} widths={widths} sizes={sizes} loading={loading} class={className} />
+)}

@@ -1,0 +1,11 @@
+---
+// À placer dans <section class="hero">, juste après l'image <ArtworkImage … class="hero-egg" />.
+---
+<canvas class="hero-egg-canvas" aria-hidden="true"></canvas>
+<script>
+  import { initHeroEgg } from '../scripts/hero-egg';
+  initHeroEgg();
+</script>
+<style is:global>
+  .hero-egg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+</style>

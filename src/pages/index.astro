@@ -1,26 +1,38 @@
 ---
+import HeroEggAnimation from '../components/HeroEggAnimation.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArtworkImage from '../components/ArtworkImage.astro';
 import ArtworkGallery from '../components/ArtworkGallery.astro';
 import Ornament from '../components/Ornament.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 import { artworks } from '../data/artworks';
 import { ornaments } from '../data/ornaments';
 import { publishedPortfolio } from '../lib/portfolio';
-import egg from '../assets/originals/oeuf-phenix-ivoire-ombre-douce.png'; import atelier from '../assets/originals/atelier.jpeg'; import tarot from '../assets/originals/tarot.jpg'; import severine from '../assets/originals/severine.jpg';
+import { accueil } from '../lib/content';
+import egg from '../assets/originals/oeuf-phenix-ivoire-ombre-douce.png'; import atelier from '../assets/originals/atelier.jpeg'; import severine from '../assets/editorial/bonjour/02.webp';
 const remoteArtworks = await publishedPortfolio(Astro.cookies, Astro.request, undefined, true);
-const cabinetArtworks = [...remoteArtworks, ...artworks.filter((local) => !remoteArtworks.some((remote) => remote.slug === local.slug))];
+const availableArtworks = [...artworks, ...remoteArtworks.filter((remote) => !artworks.some((local) => local.slug === remote.slug))];
+const cabinetArtworks = [
+  ...availableArtworks.filter((artwork) => artwork.category === 'illustration').slice(0, 3),
+  ...availableArtworks.filter((artwork) => artwork.category === 'ceramique').slice(0, 3),
+];
 ---
 <BaseLayout>
   <section class="hero" aria-labelledby="hero-title">
-    <p class="eyebrow">Atelier de Séverine Piette</p><h1 id="hero-title"><span>Tout commence</span><span>par un signe.</span></h1>
-    <ArtworkImage src={egg} alt="Œuf de phénix ivoire décoré par Séverine Piette" widths={[480,640,900,1086]} sizes="(max-width: 700px) 70vw, 38vw" loading="eager" class="hero-egg" />
-    <a class="scroll-cue" href="#atelier">Entrer dans l’univers <span>↓</span></a>
+    <h1 id="hero-title">{accueil.hero.titleLines.map(line => <span>{line}</span>)}</h1>
+    <ArtworkImage src={egg} alt={accueil.hero.eggAlt} widths={[480,640,900,1086]} sizes="(max-width: 700px) 70vw, 38vw" loading="eager" class="hero-egg" />
+    <HeroEggAnimation />
+    <a class="scroll-cue" href="#cabinet-title">{accueil.hero.scrollLabel} <svg class="arrow-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4v16M5 13l7 7 7-7" /></svg></a>
   </section>
-  <section id="atelier" class="atelier-section" aria-labelledby="atelier-caption"><figure><ArtworkImage src={atelier} alt="Bureau couvert de dessins, d’objets et de carnets dans l’atelier de Séverine Piette" widths={[768,1200,1800,2400]} sizes="100vw" loading="eager" class="atelier-wide" /><figcaption id="atelier-caption"><Ornament src={ornaments.phoenixFeather} size="small" />Dans l’atelier de Séverine</figcaption></figure></section>
-  <div class="cabinet-ornament" aria-hidden="true"><Ornament src={ornaments.curiosityBellJar} size="large" /></div><ArtworkGallery artworks={cabinetArtworks} />
-  <nav class="gallery-links" aria-label="Galeries complètes"><a class="text-link" href="/illustrations">Toutes les illustrations <span aria-hidden="true">→</span></a><a class="text-link" href="/ceramiques">Toute la collection Terre &amp; Mer <span aria-hidden="true">→</span></a></nav>
-  <section class="split-links"><a href="/tarot"><ArtworkImage src={tarot} alt="Cartes du Bon Tarot" /><Ornament src={ornaments.astrologyWheel} class="split-ornament" size="small" /><span>À la carte</span><h2>Tarot</h2><b>Découvrir →</b></a><a href="/ateliers"><Ornament src={ornaments.workshopTools} class="split-ornament" size="medium" /><span>Faire ensemble</span><h2>Ateliers</h2><b>Voir l’agenda →</b></a></section>
-  <section class="about-tease section"><div><p class="eyebrow">Bonjour</p><h2>Je collectionne les signes, les histoires et les matières.</h2><a class="text-link" href="/bonjour">Rencontrer Séverine →</a></div><ArtworkImage src={severine} alt="Séverine Piette, portrait par Charles Delcourt" /></section>
-  <section class="press section"><p class="eyebrow">On parle de moi</p><h2>Dans la presse</h2><p>Une sélection d’articles et de rencontres autour de l’atelier.</p><a class="text-link" href="/contact">Voir les parutions →</a></section>
-  <section class="contact-cta"><Ornament src={ornaments.moonDoorway} size="medium" /><p>Une idée, un objet, une histoire à faire naître ?</p><a href="/contact">Écrire à l’atelier <span>↗</span></a></section>
+  <div class="cabinet-ornament" aria-hidden="true"><Ornament src={ornaments.curiosityBellJar} size="large" /></div><ArtworkGallery artworks={cabinetArtworks} title={accueil.gallery.title} />
+  <nav class="gallery-links" aria-label={accueil.gallery.linksLabel}><a class="text-link arrow-link" href={accueil.gallery.illustrationsHref}>{accueil.gallery.illustrationsLink} <ArrowIcon /></a><a class="text-link arrow-link" href={accueil.gallery.ceramicsHref}>{accueil.gallery.ceramicsLink} <ArrowIcon /></a></nav>
+  <section class="split-links">
+    <a class="split-link--tarot" href={accueil.splitLinks.tarot.href}><Ornament src={ornaments.tarotStone} class="split-ornament" widths={[96, 144, 192, 288, 384]} sizes="200px" /><span>{accueil.splitLinks.tarot.eyebrow}</span><h2>{accueil.splitLinks.tarot.title}</h2><b class="arrow-link">{accueil.splitLinks.tarot.link} <ArrowIcon /></b></a>
+    <a class="split-link--illustrations" href={accueil.splitLinks.illustrations.href}><div class="split-ornament-slot"><Ornament src={ornaments.paperIllustrations} class="split-ornament split-ornament--illustrations" widths={[96, 144, 192, 288, 384]} sizes="200px" /></div><div class="split-link-copy"><span>{accueil.splitLinks.illustrations.eyebrow}</span><h2>{accueil.splitLinks.illustrations.title}</h2><b class="arrow-link">{accueil.splitLinks.illustrations.link} <ArrowIcon /></b></div></a>
+    <a class="split-link--workshops" href={accueil.splitLinks.workshops.href}><div class="split-ornament-slot"><Ornament src={ornaments.workshopTools} class="split-ornament split-ornament--atelier" widths={[144, 192, 288, 384, 576]} sizes="300px" /></div><div class="split-link-copy"><span>{accueil.splitLinks.workshops.eyebrow}</span><h2>{accueil.splitLinks.workshops.title}</h2><b class="arrow-link">{accueil.splitLinks.workshops.link} <ArrowIcon /></b></div></a>
+  </section>
+  <section class="about-tease section"><div><p class="eyebrow">{accueil.about.eyebrow}</p><h2>{accueil.about.title}</h2><a class="text-link arrow-link" href={accueil.about.href}>{accueil.about.link} <ArrowIcon /></a></div><ArtworkImage src={severine} alt={accueil.about.portraitAlt} /></section>
+  <section id="atelier" class="atelier-section" aria-labelledby="atelier-caption"><figure><figcaption id="atelier-caption"><Ornament src={ornaments.phoenixFeather} size="small" />{accueil.atelier.caption}</figcaption><ArtworkImage src={atelier} alt={accueil.atelier.imageAlt} widths={[768,1200,1800,2400]} sizes="100vw" loading="eager" class="atelier-wide" /></figure></section>
+  <section class="press section"><p class="eyebrow">{accueil.press.eyebrow}</p><h2>{accueil.press.title}</h2><p>{accueil.press.description}</p><a class="text-link arrow-link" href={accueil.press.href}>{accueil.press.link} <ArrowIcon /></a></section>
+  <section class="contact-cta"><Ornament src={ornaments.moonDoorway} size="medium" /><p>{accueil.contact.description}</p><a class="arrow-link" href={accueil.contact.href}>{accueil.contact.link} <ArrowIcon /></a></section>
 </BaseLayout>

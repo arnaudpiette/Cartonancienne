@@ -1,0 +1,61 @@
+{
+  "brandSignature": "Séverine Piette",
+  "hero": {
+    "scrollLabel": "Entrer dans le cabinet",
+    "titleLines": ["Tout commence", "par un signe."],
+    "eggAlt": "Œuf de phénix ivoire décoré par Séverine Piette"
+
+  },
+  "atelier": {
+    "imageAlt": "Bureau couvert de dessins, d’objets et de carnets dans l’atelier de Séverine Piette",
+    "caption": "Mon atelier"
+  },
+  "gallery": {
+    "title": "Cabinet de curiosités",
+    "linksLabel": "Galeries complètes",
+    "illustrationsHref": "/illustrations",
+    "illustrationsLink": "Toutes les illustrations",
+    "ceramicsHref": "/ceramiques",
+    "ceramicsLink": "Toutes les céramiques"
+  },
+  "splitLinks": {
+    "tarot": {
+      "href": "/tarot",
+      "eyebrow": "Pierre",
+      "title": "Tarot",
+      "link": "Découvrir"
+    },
+    "illustrations": {
+      "href": "/illustrations",
+      "eyebrow": "Papier",
+      "title": "Illustrations",
+      "link": "Découvrir"
+    },
+
+    "workshops": {
+      "href": "/ateliers",
+      "eyebrow": "Ciseaux",
+      "title": "Ateliers",
+      "link": "Découvrir"
+    }
+  },
+  "about": {
+    "href": "/bonjour",
+    "eyebrow": "Bonjour",
+    "title": "Je collectionne les signes, les histoires et les matières.",
+    "link": "Rencontrer Séverine",
+    "portraitAlt": "Séverine Piette, portrait par Charles Delcourt"
+  },
+  "press": {
+    "href": "/presse",
+    "eyebrow": "On parle de moi",
+    "title": "Dans la presse",
+    "description": "Une sélection d’articles et de rencontres autour de l’atelier.",
+    "link": "Voir les parutions"
+  },
+  "contact": {
+    "href": "/contact",
+    "description": "Une idée, un objet, une histoire à faire naître ?",
+    "link": "Écrire à l’atelier"
+  }
+}

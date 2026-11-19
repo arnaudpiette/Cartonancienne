@@ -1,3 +1,4 @@
+import sharp from 'sharp';
 import type { APIRoute } from 'astro';
 import { supabaseServer } from '../../lib/supabase';
 
@@ -14,5 +15,7 @@ export const GET: APIRoute = async ({ url, cookies, request }) => {
   if (!media) return new Response('Not found', { status: 404 });
   const { data, error } = await client.storage.from('artworks').download(media.storage_path);
   if (error || !data) return new Response('Not found', { status: 404 });
-  return new Response(data, { headers: { 'Content-Type': 'image/webp', 'Cache-Control': 'public, max-age=60, s-maxage=60' } });
+  const width = Math.min(Math.max(Number(url.searchParams.get('w')) || 1200, 200), 2000);
+  const body = await sharp(Buffer.from(await data.arrayBuffer())).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 82 }).toBuffer();
+  return new Response(body, { headers: { 'Content-Type': 'image/webp', 'Cache-Control': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400' } });
 };
